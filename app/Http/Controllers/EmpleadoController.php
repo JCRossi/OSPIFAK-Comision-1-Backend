@@ -84,7 +84,7 @@ class EmpleadoController extends Controller
                 ]
             );
 
-            $empeado = new Empleado();
+            $empleado = new Empleado();
 
             $empleado -> usuario = $request -> get('usuario'); 
             $empleado -> password = $request -> get('password'); 

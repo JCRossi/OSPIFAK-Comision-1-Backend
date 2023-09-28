@@ -99,7 +99,7 @@ class PlanController extends Controller
                 $cobertura->setHidden(['created_at', 'updated_at']);
             }
             
-            $compra->setHidden(['created_at', 'updated_at']);
+            $plan->setHidden(['created_at', 'updated_at']);
         }
         catch(ValidationException $e){
             $errors = $e->validator->errors()->all();
