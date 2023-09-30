@@ -40,7 +40,7 @@ class PlanController extends Controller
                     'precio_adultos' => 'required|integer|min:0|max:99999999',
                     'precio_adultos_mayores' => 'required|integer|min:0|max:99999999',
                     'coberturas' => 'required|array|min:1',    
-                    'coberturas.*.nombre_prestacion' => 'required|string',  
+                    'coberturas.*.nombre_prestacion' => 'required',  
                     'coberturas.*.porcentaje' => 'required|integer|min:0|max:100',
                 ],
                 [
@@ -72,8 +72,7 @@ class PlanController extends Controller
                     'coberturas.array' => 'Las coberturas no tienen el formato adecuado',  
                     
                     'coberturas.*.nombre_prestacion.required' => 'El nombre de la prestación no puede ser vacío',
-                    'coberturas.*.nombre_prestacion.string' => 'El nombre de la prestación no tiene el formato adecuado.',
-                
+                    
                     'coberturas.*.porcentaje.required' => 'El porcentaje de la prestación no puede ser vacío.',
                     'coberturas.*.porcentaje.integer' => 'El porcentaje de la prestación no tiene el formato adecuado.',
                     'coberturas.*.porcentaje.min' => 'El porcentaje ingresado debe encontrarse entre 0 y 100.',

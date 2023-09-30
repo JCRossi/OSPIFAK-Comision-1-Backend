@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('cobertura', function (Blueprint $table) {
             $table->id();
-            $table->string("nombre_prestacion");
+            $table->enum('nombre_prestacion', ['Consultas medicas', 'Consultas medicas domiciliarias', 
+                'Consulta medica online', 'Internacion','Odontologia general', 'Ortodoncia', 
+                'Protesis odontologicas', 'Implantes odontologicos', 'Kinesiologia', 'Psicologia',
+                'Medicamentos en farmacia', 'Medicamentos en internacion', 'Optica', 'Cirugias esteticas',
+                'Analisis clinicos', 'Analisis de diagnostico']);
             $table->integer("porcentaje");
             $table->integer("id_plan");
             $table->timestamps();
