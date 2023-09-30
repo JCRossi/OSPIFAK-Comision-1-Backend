@@ -5,20 +5,29 @@
             "runtime": "vercel-php@0.6.0" 
         }
     },
+    
     "routes": [
         {
             "src": "/build/(.*)",
             "dest": "/build/$1"
         },
         {
+            "src": "/view_images/(.*)",
+            "dest": "/view_images/$1"
+        },
+        {
+            "src": "/dist/(.*)",
+            "dest": "/dist/$1"
+        },
+        {
             "src": "/(.*)",
             "dest": "/api/index.php"
-        }
+        }      
     ],
     "env": {
-        "APP_NAME": "Vercel Laravel IAW",
+        "APP_NAME": "OSPIFAK",
         "APP_ENV": "production",
-        "APP_DEBUG": "false",
+        "APP_DEBUG": "true",
         "VERCEL_DEMO_MODE": "true",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
@@ -29,7 +38,7 @@
 
         "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
-        "SESSION_DRIVER": "array",
+        "SESSION_DRIVER": "cookie",
         "SSR_TEMP_PATH": "/tmp/ssr",
         "NODE_PATH": "node"
     }

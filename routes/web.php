@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmpleadoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// esto va rodeado por middleware del login despues
+Route::resource('empleados',EmpleadoController::class);
