@@ -9,6 +9,9 @@ use Illuminate\Validation\ValidationException;
 
 class AdminController extends Controller
 {
+    function _construct(){
+        $this->middleware('can:admin.create')->only('create','store');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -35,7 +38,6 @@ class AdminController extends Controller
                 [
                     'usuario' => 'required|string',
                     'password' => 'required|string',
-                    'email' => 'required|email|unique:empleado,email',
                     
                 ],
                 [
@@ -44,10 +46,6 @@ class AdminController extends Controller
     
                     'password.required' => 'El password no puede ser vacío.',
                     'password.string' => 'El password no tiene el formato adecuado.',
-
-                    'email.required' => 'El email no puede ser vacío.',
-                    'email.email' => 'El email no tiene el formato adecuado.',
-                    'email.unique' => 'Ya existe un empleado registrado con el email ingresado.',
                 ]
             );
 
@@ -55,7 +53,6 @@ class AdminController extends Controller
 
             $admin -> usuario = $request -> get('usuario'); 
             $admin -> password = $request -> get('password'); 
-            $admin -> email = $request -> get('email'); 
 
             $admin->save();
             $admin->setHidden(['created_at', 'updated_at']);
