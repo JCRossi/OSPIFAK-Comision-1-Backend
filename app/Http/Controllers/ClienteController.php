@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Cliente;
+use Illuminate\Validation\ValidationException;
+use App\Models\Menor;
 
 class ClienteController extends Controller
 {
