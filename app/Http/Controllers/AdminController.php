@@ -38,7 +38,7 @@ class AdminController extends Controller
                 [
                     'usuario' => 'required|string',
                     'password' => 'required|string',
-                    
+                    'nombre' => 'required|string|max:50',                    
                 ],
                 [
                     'usuario.required' => 'El usuario no puede ser vacío',
@@ -46,6 +46,11 @@ class AdminController extends Controller
     
                     'password.required' => 'El password no puede ser vacío.',
                     'password.string' => 'El password no tiene el formato adecuado.',
+
+                    'nombre.required' => 'El nombre no puede ser vacío',
+                    'nombre.string' => 'El nombre no tiene el formato adecuado.',
+                    'nombre.max' => 'El nombre ingresado es más extenso de lo permitido (50 caracteres).',
+
                 ]
             );
 

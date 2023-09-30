@@ -17,6 +17,7 @@ class UserSeeder extends Seeder
             'usuario'=> '11111111',
             'password' => bcrypt('admin123'),
             'remember_token' => 'abcd',
+            'nombre' => 'admin',
         ]);
     }
 }
