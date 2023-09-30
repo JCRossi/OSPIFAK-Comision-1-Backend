@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string("direccion");
             $table->integer("telefono");
             $table->integer("id_plan");
+            $table->enum('forma_pago', ['mensual', 'anual, semestral']);
             $table->timestamps();
 
             $table->foreign('id_plan')
