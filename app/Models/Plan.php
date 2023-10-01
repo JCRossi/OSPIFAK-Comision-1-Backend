@@ -9,10 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Plan extends Model
 {
     use HasFactory;
-    protected $table = 'plan';
+    protected $table = 'plans';
 
     public function coberturas(): HasMany
     {
-        return $this->hasMany(Cobertura::class, 'id_plan');
+        return $this->hasMany(Cobertura::class, 'plan_id');
     }
 }

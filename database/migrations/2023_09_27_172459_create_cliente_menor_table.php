@@ -17,11 +17,10 @@ return new class extends Migration
             $table->string("apellido");
             $table->date("fecha_nacimiento");
             $table->integer("dni")->unique();
-            $table->integer("id_cliente");
+            $table->foreignId('cliente_id')->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamps();
-
-            $table->foreign('id_cliente')
-                ->references('id')->on('cliente');
         });
     }
 

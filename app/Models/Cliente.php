@@ -11,7 +11,7 @@ class Cliente extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
-    protected $table = 'cliente';
+    protected $table = 'clientes';
     protected $fillable = [
         'DNI',
         'nombre',
@@ -26,6 +26,6 @@ class Cliente extends Authenticatable
 
     public function menores(): HasMany
     {
-        return $this->hasMany(Menor::class, 'id_cliente');
+        return $this->hasMany(Menor::class, 'cliente_id');
     }
 }

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cliente', function (Blueprint $table) {
+        Schema::create('clientes', function (Blueprint $table) {
             $table->id();
             $table->string("usuario");
             $table->string("password");
@@ -22,12 +22,12 @@ return new class extends Migration
             $table->string("email");
             $table->string("direccion");
             $table->integer("telefono");
-            $table->integer("id_plan");
-            $table->enum('forma_pago', ['mensual', 'anual, semestral']);
+            $table->bigInteger("id_plan");
+            $table->foreignId('plan_id')->constrained()
+                  ->onUpdate('cascade')
+                  ->onDelete('cascade');
             $table->timestamps();
-
-            $table->foreign('id_plan')
-                ->references('id')->on('plan');
+            $table->enum('forma_pago', ['mensual', 'anual, semestral']);
         });
     }
 
