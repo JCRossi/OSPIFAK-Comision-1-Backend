@@ -32,7 +32,7 @@ class PlanController extends Controller
      */
     public function store(Request $request)
     {
-        try{
+
             $request->validate(
                 [
                     'nombre' => 'required|string|max:10',   
@@ -100,12 +100,8 @@ class PlanController extends Controller
             }
             
             $plan->setHidden(['created_at', 'updated_at']);
-        }
-        catch(ValidationException $e){
-            $errors = $e->validator->errors()->all();
-            
-            return redirect()->back()->withInput()->withErrors($errors);
-        }
+
+            return redirect()->to('/empleados')->with('success', 'Empleado dado de alta correctamente');
     }
 
     /**
