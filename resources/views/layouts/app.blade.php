@@ -21,8 +21,8 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navigationbar shadow-sm">
-            <div class="container">
+        <nav class="navbar navbar-expand-md navbar-light navbar shadow-sm">
+            <div class="container" style="text-align: center;">
 
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="{{ asset('view_images/favicon.png') }}" alt="Logo" height="50" width="70">

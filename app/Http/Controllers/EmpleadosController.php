@@ -7,14 +7,14 @@ use App\Models\Empleado;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
-class EmpleadoController extends Controller
+class EmpleadosController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('empleados/create');
+        return view('empleados/index');
     }
 
     /**
@@ -22,7 +22,7 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-        return view("empleado.create");
+        return view("empleados/create");
     }
 
     /**
@@ -30,27 +30,19 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        try{
+ 
             $request->validate(
                 [
-                    'usuario' => 'required|string',
-                    'password' => 'required|string',
                     'nombre' => 'required|string|max:50',
                     'apellido' => 'required|string|max:50',
                     'fecha_nacimiento' => 'required|date',
                     'dni' => 'required|numeric|min:1|max:99999999',
-                    'email' => 'required|email|unique:empleado,email',
+                    'email' => 'required|email|unique:empleados,email',
                     'direccion' => 'required|string|max:100',
                     'telefono' => 'required|numeric',
                     'fecha_ingreso' => 'required|date',
                 ],
                 [
-                    'usuario.required' => 'El usuario no puede ser vacío',
-                    'usuario.string' => 'El usuario no tiene el formato adecuado.',
-    
-                    'password.required' => 'El password no puede ser vacío.',
-                    'password.string' => 'El password no tiene el formato adecuado.',
-
                     'nombre.required' => 'El nombre no puede ser vacío',
                     'nombre.string' => 'El nombre no tiene el formato adecuado.',
                     'nombre.max' => 'El nombre ingresado es más extenso de lo permitido (50 caracteres).',
@@ -83,10 +75,9 @@ class EmpleadoController extends Controller
                 ]
             );
 
-            $empeado = new Empleado();
-
-            $empleado -> usuario = $request -> get('usuario'); 
-            $empleado -> password = $request -> get('password'); 
+            $empleado = new Empleado();
+            $empleado -> usuario = $request -> get('dni'); 
+            $empleado -> password = $request -> get('dni'); 
             $empleado -> nombre = $request -> get('nombre'); 
             $empleado -> apellido = $request -> get('apellido'); 
             $empleado -> fecha_nacimiento = $request -> get('fecha_nacimiento'); 
@@ -97,14 +88,8 @@ class EmpleadoController extends Controller
             $empleado -> fecha_ingreso = $request -> get('fecha_ingreso'); 
 
             $empleado->save();
-            $empleado->setHidden(['created_at', 'updated_at']);
             
-        }
-        catch(ValidationException $e) {
-            $errors = $e->validator->errors()->all();
-            
-            return redirect()->back()->withInput()->withErrors($errors);
-        }
+        return redirect()->to('/empleados')->with('success', 'Empleado dado de alta correctamente');
     }
 
     /**

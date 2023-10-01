@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\EmpleadosController;
 use App\Http\Controllers\PlanController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,9 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard'); // deberia ir al login y luego de loguearse al dashboard, pero por ahora asi
 });
 
 // esto va rodeado por middleware del login despues
-Route::resource('empleados',EmpleadoController::class);
+Route::resource('empleados',EmpleadosController::class);
 Route::resource('planes',PlanController::class);

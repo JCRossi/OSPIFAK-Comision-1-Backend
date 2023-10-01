@@ -10,7 +10,7 @@ class Empleado extends Authenticatable
 {
     use HasApiTokens;
     use HasFactory;
-    protected $table = 'empleado';
+    protected $table = 'empleados';
     protected $fillable = [
         'DNI',
         'nombre',

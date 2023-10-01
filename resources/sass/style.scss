@@ -1,10 +1,35 @@
-.navigationbar {
+.navbar {
     background-color: white;
     font-size: 1.7rem;
-    font-weight: bold;
     font-family: 'serif', sans-serif;
     color: black;
-  }
+    padding: 10px 0;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar li {
+    display: inline;
+    margin-right: 10px;
+}
+
+.navbar li a {
+    color: grey;
+    text-decoration: none;
+    text-align: center; /* Alineación de texto centrada */
+    display: block; /* Hacer que el enlace ocupe todo el ancho del li */
+    padding: 10px 0; /* Agregar algún espacio entre los elementos */
+}
+
+.navbar .active a {
+    border-bottom: 2px solid #00cc00;
+    padding-bottom: 3px;
+}
+
 .botonColor{
     background-color: rgba(255, 0, 0, 0.488);
     color: white;
@@ -34,4 +59,3 @@
 .pagination li.active a:focus {
     box-shadow: none;
 }
-
