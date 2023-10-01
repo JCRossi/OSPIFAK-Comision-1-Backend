@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\EmpleadosController;
+use App\Http\Controllers\MenoresController;
 use App\Http\Controllers\PlanController;
+use App\Http\Controllers\ClientesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,3 +24,5 @@ Route::get('/', function () {
 // esto va rodeado por middleware del login despues
 Route::resource('empleados',EmpleadosController::class);
 Route::resource('planes',PlanController::class);
+Route::resource('clientes', ClientesController::class);
+Route::resource('clienteMenor',MenoresController::class);

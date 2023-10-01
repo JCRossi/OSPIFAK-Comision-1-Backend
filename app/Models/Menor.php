@@ -10,6 +10,14 @@ class Menor extends Model
     use HasFactory;
     protected $table = 'cliente_menor';
 
+    protected $fillable = [
+        'DNI',
+        'nombre',
+        'apellido',
+        'fecha_nacimiento',
+        'telefono',
+    ];
+
     public function adultoResponsable()
     {
         return $this->belongsTo(Cliente::class);
