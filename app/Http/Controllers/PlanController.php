@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Plan;
 use App\Models\Cobertura;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -15,7 +16,7 @@ class PlanController extends Controller
      */
     public function index()
     {
-        //
+        return view("planes/index");
     }
 
     /**
@@ -23,7 +24,7 @@ class PlanController extends Controller
      */
     public function create()
     {
-        return view("plan.create");
+        return view("planes/create");
     }
 
     /**
@@ -79,7 +80,7 @@ class PlanController extends Controller
                     'coberturas.*.porcentaje.max' => 'El porcentaje ingresado debe encontrarse entre 0 y 100.',
                 ]
             );
-
+            
             $plan = new Plan();
             $plan->nombre = $request->nombre;
             $plan->precio_jovenes = $request->precio_jovenes;

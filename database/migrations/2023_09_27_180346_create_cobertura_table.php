@@ -19,11 +19,10 @@ return new class extends Migration
                 'Medicamentos en farmacia', 'Medicamentos en internacion', 'Optica', 'Cirugias esteticas',
                 'Analisis clinicos', 'Analisis de diagnostico']);
             $table->integer("porcentaje");
-            $table->integer("id_plan");
+            $table->foreignId('plan_id')->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamps();
-
-            $table->foreign('id_plan')
-                ->references('id')->on('plan');
         });
     }
 
