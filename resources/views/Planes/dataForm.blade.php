@@ -62,7 +62,7 @@
             <div class="form-group mb-3">
                 <label class="form-label" for="descripcion"style="font-size: 30px;">Coberturas</label>
                 <br>
-                <a href="{{ url('/planes/coberturas') }}" class="btn btn-outline-warning">Coberturas</a>
+                <a href="{{ url('/coberturas/create') }}" class="btn btn-outline-warning">Coberturas</a>
             </div>
 
 

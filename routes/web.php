@@ -3,6 +3,7 @@
 use App\Http\Controllers\EmpleadosController;
 use App\Http\Controllers\PlanController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CoberturasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,4 @@ Route::get('/', function () {
 // esto va rodeado por middleware del login despues
 Route::resource('empleados',EmpleadosController::class);
 Route::resource('planes',PlanController::class);
+Route::resource('coberturas',CoberturasController::class);
