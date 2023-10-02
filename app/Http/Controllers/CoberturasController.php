@@ -86,7 +86,7 @@ class CoberturasController extends Controller
             
             foreach ($enumValues as $index => $nombre_prestacion) {
                 $cobertura = new Cobertura();
-                $cobertura->id_plan = $plan->id;
+                $cobertura->plan_id = 1;
                 $cobertura->nombre_prestacion = $nombre_prestacion;
                 $cobertura->porcentaje = $porcentajes[$index];
                 $cobertura->save();

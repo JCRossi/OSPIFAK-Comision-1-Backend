@@ -7,7 +7,7 @@
     <div class="container">
         @include('messages')
 
-        <form action="/planes" method="POST">
+        <form action="/coberturas" method="POST">
             @csrf
             <table class="table">
                 <thead>
