@@ -11,6 +11,12 @@ use Illuminate\Validation\ValidationException;
 
 class PlanController extends Controller
 {
+    function _construct(){
+        $this->middleware('can:planes.index')->only('index');
+        $this->middleware('can:planes.create')->only('create','store');
+    }
+
+
     /**
      * Display a listing of the resource.
      */

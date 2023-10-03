@@ -6,6 +6,8 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\User;
+
 class UserSeeder extends Seeder
 {
     /**
@@ -13,11 +15,17 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('users')->insert([
+        User::create([
             'usuario'=> '11111111',
             'password' => bcrypt('admin123'),
             'remember_token' => 'abcd',
-            'nombre' => 'admin',
-        ]);
+            'nombre' => 'Administrador',
+        ])->assignRole('Administrador');
+
+        User::create([
+            'usuario' => '22222222',
+            'password' =>  bcrypt('empleado123'),
+            'nombre' => 'Empleado',
+        ])->assignRole('Empleado');
     }
 }

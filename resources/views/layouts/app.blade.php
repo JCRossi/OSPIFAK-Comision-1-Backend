@@ -7,14 +7,15 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'OSPIFAK') }}</title>
+    <title>OSPIFAK</title>
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     
     <!-- App Icon -->
-    <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
+    <link rel="shortcut icon" href="{{ asset('imagen.jpeg') }}">
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -25,8 +26,8 @@
             <div class="container" style="text-align: center;">
 
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{ asset('view_images/favicon.png') }}" alt="Logo" height="50" width="70">
-                    <span>{{ config('app.name', 'OSPIFAK') }}</span>
+                    <img src="{{ asset('imagen.jpeg') }}" alt="Logo" height="70" width="90">
+                    
                 </a>      
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -59,21 +60,41 @@
                             
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->nombre }}
+
+
+
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();">
+                                            {{ __('Logout') }}
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                    </div>
+
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
+                                
                             </li>
+
+
+                            <div class=" d-flex justify-content-end m-2">
+      <!-- Authentication -->
+        
+          <form  method="POST" action="{{ route('logout') }}">
+              @csrf
+              <x-responsive-nav-link :href="route('logout')"
+                      onclick="event.preventDefault();
+                              this.closest('form').submit();">
+                  {{ __('Log Out') }}
+              </x-responsive-nav-link>
+          </form>  
+       </div>
+
                         @endguest
                     </ul>
                 </div>

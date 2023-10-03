@@ -9,6 +9,11 @@ use App\Models\Menor;
 
 class ClienteController extends Controller
 {
+    function _construct(){
+        $this->middleware('can:cliente.index')->only('index');
+        $this->middleware('can:cliente.create')->only('create','store');
+    }
+
     /**
      * Display a listing of the resource.
      */

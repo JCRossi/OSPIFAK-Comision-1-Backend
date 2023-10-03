@@ -9,6 +9,11 @@ use Illuminate\Validation\ValidationException;
 
 class EmpleadosController extends Controller
 {
+    function _construct(){
+        $this->middleware('can:empleados.index')->only('index');
+        $this->middleware('can:empleados.create')->only('create','store');
+    }
+
     /**
      * Display a listing of the resource.
      */

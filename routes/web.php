@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\EmpleadosController;
-use App\Http\Controllers\PlanController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CoberturasController;
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\EmpleadosController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,10 +18,28 @@ use App\Http\Controllers\CoberturasController;
 */
 
 Route::get('/', function () {
-    return view('dashboard'); // deberia ir al login y luego de loguearse al dashboard, pero por ahora asi
+    return view('welcome');
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+
+
 // esto va rodeado por middleware del login despues
+
 Route::resource('empleados',EmpleadosController::class);
 Route::resource('planes',PlanController::class);
 Route::resource('coberturas',CoberturasController::class);
+
+
+require __DIR__.'/auth.php';
