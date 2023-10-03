@@ -34,12 +34,10 @@ Route::middleware('auth')->group(function () {
 });
 
 
-
-// esto va rodeado por middleware del login despues
-
-Route::resource('empleados',EmpleadosController::class);
-Route::resource('planes',PlanController::class);
-Route::resource('coberturas',CoberturasController::class);
-
+Route::middleware('auth')->group(function () {
+    Route::resource('empleados',EmpleadosController::class);
+    Route::resource('planes',PlanController::class);
+    Route::resource('coberturas',CoberturasController::class);
+});
 
 require __DIR__.'/auth.php';
