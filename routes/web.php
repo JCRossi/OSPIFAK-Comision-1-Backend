@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CoberturasController;
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CoberturasController;
+use App\Http\Controllers\PlanController;
 use App\Http\Controllers\EmpleadosController;
 /*
 |--------------------------------------------------------------------------
