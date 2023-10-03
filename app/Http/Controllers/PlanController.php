@@ -41,7 +41,7 @@ class PlanController extends Controller
 
             $request->validate(
                 [
-                    'nombre' => 'required|string|max:10',   
+                    'nombre' => 'required|string|max:10|unique:plans,nombre',   
                     'precio_jovenes' => 'required|integer|min:0|max:99999999',
                     'precio_adultos_jovenes' => 'required|integer|min:0|max:99999999',
                     'precio_adultos' => 'required|integer|min:0|max:99999999',
@@ -52,6 +52,7 @@ class PlanController extends Controller
                     'nombre.required' => 'El nombre no puede ser vacío',
                     'nombre.string' => 'El nombre no tiene el formato adecuado.',
                     'nombre.max' => 'El nombre ingresado es más extenso de lo permitido (10 caracteres).',
+                    'nombre.unique' => 'Ya existe un plan con ese nombre.',
                     
                     'precio_jovenes.required' => 'El precio de menores de 21 no puede ser vacío',
                     'precio_jovenes.integer' => 'El precio de menores de 21 no tiene el formato adecuado',
@@ -88,7 +89,7 @@ class PlanController extends Controller
             
             $plan->setHidden(['created_at', 'updated_at']);
 
-            return redirect()->to('/planes')->with('success', 'Empleado dado de alta correctamente');
+            return redirect()->to('/coberturas/create')->with('success', 'Plan dado de alta correctamente');
     }
 
     /**

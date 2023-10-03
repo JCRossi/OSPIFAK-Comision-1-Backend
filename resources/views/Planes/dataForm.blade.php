@@ -59,17 +59,9 @@
                             @enderror
             </div>
 
-            <div class="form-group mb-3">
-                <label class="form-label" for="descripcion"style="font-size: 30px;">Coberturas</label>
-                <br>
-                <a href="{{ url('/coberturas/create') }}" class="btn btn-outline-warning">Coberturas</a>
-            </div>
-
-
-
             <div class="form-group float-end">
                         <a href="/planes" class="btn btn-outline-primary">Cancelar</a>
-                        <button type="submit" class="btn btn-outline-success">Guardar datos</button>
+                        <button type="submit" class="btn btn-outline-success">Agregar coberturas</button>
             </div>
     </form>
 </div>

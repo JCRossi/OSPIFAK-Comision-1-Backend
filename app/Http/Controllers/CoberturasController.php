@@ -83,10 +83,12 @@ class CoberturasController extends Controller
                     'porcentaje.*.max' => 'El porcentaje ingresado debe encontrarse entre 0 y 100.',
                 ]
             );
+
+            $planId = Plan::max('id');
             
             foreach ($enumValues as $index => $nombre_prestacion) {
                 $cobertura = new Cobertura();
-                $cobertura->plan_id = 1;
+                $cobertura->plan_id = $planId;
                 $cobertura->nombre_prestacion = $nombre_prestacion;
                 $cobertura->porcentaje = $porcentajes[$index];
                 $cobertura->save();
