@@ -32,7 +32,7 @@ class PlanController extends Controller
      */
     public function store(Request $request)
     {
-        try{
+
             $request->validate(
                 [
                     'nombre' => 'required|string|max:10',   
@@ -40,9 +40,7 @@ class PlanController extends Controller
                     'precio_adultos_jovenes' => 'required|integer|min:0|max:99999999',
                     'precio_adultos' => 'required|integer|min:0|max:99999999',
                     'precio_adultos_mayores' => 'required|integer|min:0|max:99999999',
-                    'coberturas' => 'required|array|min:1',    
-                    'coberturas.*.nombre_prestacion' => 'required',  
-                    'coberturas.*.porcentaje' => 'required|integer|min:0|max:100',
+
                 ],
                 [
                     'nombre.required' => 'El nombre no puede ser vacío',
@@ -67,17 +65,7 @@ class PlanController extends Controller
                     'precio_adultos_mayores.required' => 'El precio de mayores de 55 no puede ser vacío',
                     'precio_adultos_mayores.integer' => 'El precio de mayores de 55 no tiene el formato adecuado',
                     'precio_adultos_mayores.min' => 'El precio de mayores de 55 tiene que ser positivo',
-                    'precio_adultos_mayores.max' => 'El precio de mayores de 55 debe ser como máximo de 8 dígitos.',
-
-                    'coberturas.required' => 'Debe haber al menos una cobertura en el plan',    
-                    'coberturas.array' => 'Las coberturas no tienen el formato adecuado',  
-                    
-                    'coberturas.*.nombre_prestacion.required' => 'El nombre de la prestación no puede ser vacío',
-                    
-                    'coberturas.*.porcentaje.required' => 'El porcentaje de la prestación no puede ser vacío.',
-                    'coberturas.*.porcentaje.integer' => 'El porcentaje de la prestación no tiene el formato adecuado.',
-                    'coberturas.*.porcentaje.min' => 'El porcentaje ingresado debe encontrarse entre 0 y 100.',
-                    'coberturas.*.porcentaje.max' => 'El porcentaje ingresado debe encontrarse entre 0 y 100.',
+                    'precio_adultos_mayores.max' => 'El precio de mayores de 55 debe ser como máximo de 8 dígitos.'
                 ]
             );
             
@@ -90,22 +78,11 @@ class PlanController extends Controller
 
             $plan->save();
 
-            foreach ($request->coberturas as $detalle) {
-                $cobertura = new Cobertura();
-                $cobertura->id_plan = $plan->id;
-                $cobertura->nombre_prestacion = $detalle['nombre_prestacion'];
-                $cobertura->porcentaje = $detalle['porcentaje'];
-                $cobertura->save();
-                $cobertura->setHidden(['created_at', 'updated_at']);
-            }
+ 
             
             $plan->setHidden(['created_at', 'updated_at']);
-        }
-        catch(ValidationException $e){
-            $errors = $e->validator->errors()->all();
-            
-            return redirect()->back()->withInput()->withErrors($errors);
-        }
+
+            return redirect()->to('/planes')->with('success', 'Empleado dado de alta correctamente');
     }
 
     /**
