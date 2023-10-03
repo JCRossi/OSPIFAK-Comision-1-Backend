@@ -16,6 +16,9 @@
     
     <!-- App Icon -->
     <link rel="shortcut icon" href="{{ asset('imagen.jpeg') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
+
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -49,52 +52,30 @@
                                 </li>
                             @endif                
                         @else
-                            <li class="nav-item">
-                                <a class="nav-link" href="/empleados">Empleado</a>
-                            </li>
+                           
                             
-                            <li class="nav-item">
-                                <a class="nav-link" href="/plan">Plan</a>
-                            </li>
-
-                            
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->nombre }}
+                           
+                        <a id="navbarDropdown" class="nav-link" v-pre>
+                            {{ Auth::user()->nombre }} <i class="fas fa-user"></i>
+                        </a>
 
 
 
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                        document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                            @csrf
-                                        </form>
-                                    </div>
-
-                                </a>
-
-                                
-                            </li>
+                          
 
 
                             <div class=" d-flex justify-content-end m-2">
-      <!-- Authentication -->
-        
-          <form  method="POST" action="{{ route('logout') }}">
-              @csrf
-              <x-responsive-nav-link :href="route('logout')"
-                      onclick="event.preventDefault();
-                              this.closest('form').submit();">
-                  {{ __('Log Out') }}
-              </x-responsive-nav-link>
-          </form>  
-       </div>
+                                <!-- Authentication -->
+                               
 
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <x-responsive-nav-link style="text-decoration: none; cursor: pointer; user-select: none; color: black;" :href="route('logout')"
+                                        onclick="event.preventDefault(); this.closest('form').submit();">
+                                        {{ __('Log Out') }}
+                                    </x-responsive-nav-link>
+                                </form>
+                                </div>
                         @endguest
                     </ul>
                 </div>
