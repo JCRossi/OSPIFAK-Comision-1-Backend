@@ -27,7 +27,7 @@ return new class extends Migration
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
             $table->timestamps();
-            $table->enum('forma_pago', ['mensual', 'anual, semestral']);
+            $table->enum('forma_pago', ['mensual', 'anual', 'semestral']);
         });
     }
 
