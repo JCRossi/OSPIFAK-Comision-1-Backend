@@ -14,7 +14,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             return response()->json(['message' => 'Inicio de sesión exitoso']);
         }
-
+        //
         return response()->json(['error' => 'Credenciales incorrectas'], 401);
     }
 }
