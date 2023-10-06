@@ -21,12 +21,12 @@ return new class extends Migration
             $table->integer("dni")->unique();
             $table->string("email");
             $table->string("direccion");
-            $table->bigInteger("telefono");
+            $table->integer("telefono");
             $table->date("fecha_ingreso");
             $table->timestamps();
         });
     }
-    
+
     /**
      * Reverse the migrations.
      */

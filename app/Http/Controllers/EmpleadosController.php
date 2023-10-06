@@ -9,11 +9,6 @@ use Illuminate\Validation\ValidationException;
 
 class EmpleadosController extends Controller
 {
-    function _construct(){
-        $this->middleware('can:empleados.index')->only('index');
-        $this->middleware('can:empleados.create')->only('create','store');
-    }
-
     /**
      * Display a listing of the resource.
      */
@@ -41,7 +36,7 @@ class EmpleadosController extends Controller
                     'nombre' => 'required|string|max:50',
                     'apellido' => 'required|string|max:50',
                     'fecha_nacimiento' => 'required|date',
-                    'dni' => 'required|numeric|min:1|max:99999999|unique:empleados,dni',
+                    'dni' => 'required|numeric|min:1|max:99999999',
                     'email' => 'required|email|unique:empleados,email',
                     'direccion' => 'required|string|max:100',
                     'telefono' => 'required|numeric',
@@ -63,7 +58,6 @@ class EmpleadosController extends Controller
                     'dni.numeric' => 'El DNI no tiene el formato adecuado.',
                     'dni.min' => 'El DNI ingresado tiene que ser mayor que 0.',
                     'dni.max' => 'El DNI ingresado es más extenso de lo permitido (8 dígitos).',
-                    'dni.unique' => 'Ya existe un empleado registrado con el DNI ingresado.',
 
                     'email.required' => 'El email no puede ser vacío.',
                     'email.email' => 'El email no tiene el formato adecuado.',

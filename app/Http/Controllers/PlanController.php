@@ -11,12 +11,6 @@ use Illuminate\Validation\ValidationException;
 
 class PlanController extends Controller
 {
-    function _construct(){
-        $this->middleware('can:planes.index')->only('index');
-        $this->middleware('can:planes.create')->only('create','store');
-    }
-
-
     /**
      * Display a listing of the resource.
      */
@@ -38,21 +32,22 @@ class PlanController extends Controller
      */
     public function store(Request $request)
     {
-
+        try{
             $request->validate(
                 [
-                    'nombre' => 'required|string|max:10|unique:plans,nombre',   
+                    'nombre' => 'required|string|max:10',   
                     'precio_jovenes' => 'required|integer|min:0|max:99999999',
                     'precio_adultos_jovenes' => 'required|integer|min:0|max:99999999',
                     'precio_adultos' => 'required|integer|min:0|max:99999999',
                     'precio_adultos_mayores' => 'required|integer|min:0|max:99999999',
-
+                    'coberturas' => 'required|array|min:1',    
+                    'coberturas.*.nombre_prestacion' => 'required',  
+                    'coberturas.*.porcentaje' => 'required|integer|min:0|max:100',
                 ],
                 [
                     'nombre.required' => 'El nombre no puede ser vacío',
                     'nombre.string' => 'El nombre no tiene el formato adecuado.',
                     'nombre.max' => 'El nombre ingresado es más extenso de lo permitido (10 caracteres).',
-                    'nombre.unique' => 'Ya existe un plan con ese nombre.',
                     
                     'precio_jovenes.required' => 'El precio de menores de 21 no puede ser vacío',
                     'precio_jovenes.integer' => 'El precio de menores de 21 no tiene el formato adecuado',
@@ -72,7 +67,17 @@ class PlanController extends Controller
                     'precio_adultos_mayores.required' => 'El precio de mayores de 55 no puede ser vacío',
                     'precio_adultos_mayores.integer' => 'El precio de mayores de 55 no tiene el formato adecuado',
                     'precio_adultos_mayores.min' => 'El precio de mayores de 55 tiene que ser positivo',
-                    'precio_adultos_mayores.max' => 'El precio de mayores de 55 debe ser como máximo de 8 dígitos.'
+                    'precio_adultos_mayores.max' => 'El precio de mayores de 55 debe ser como máximo de 8 dígitos.',
+
+                    'coberturas.required' => 'Debe haber al menos una cobertura en el plan',    
+                    'coberturas.array' => 'Las coberturas no tienen el formato adecuado',  
+                    
+                    'coberturas.*.nombre_prestacion.required' => 'El nombre de la prestación no puede ser vacío',
+                    
+                    'coberturas.*.porcentaje.required' => 'El porcentaje de la prestación no puede ser vacío.',
+                    'coberturas.*.porcentaje.integer' => 'El porcentaje de la prestación no tiene el formato adecuado.',
+                    'coberturas.*.porcentaje.min' => 'El porcentaje ingresado debe encontrarse entre 0 y 100.',
+                    'coberturas.*.porcentaje.max' => 'El porcentaje ingresado debe encontrarse entre 0 y 100.',
                 ]
             );
             
@@ -85,11 +90,22 @@ class PlanController extends Controller
 
             $plan->save();
 
- 
+            foreach ($request->coberturas as $detalle) {
+                $cobertura = new Cobertura();
+                $cobertura->id_plan = $plan->id;
+                $cobertura->nombre_prestacion = $detalle['nombre_prestacion'];
+                $cobertura->porcentaje = $detalle['porcentaje'];
+                $cobertura->save();
+                $cobertura->setHidden(['created_at', 'updated_at']);
+            }
             
             $plan->setHidden(['created_at', 'updated_at']);
-
-            return redirect()->to('/coberturas/create')->with('success', 'Plan dado de alta correctamente');
+        }
+        catch(ValidationException $e){
+            $errors = $e->validator->errors()->all();
+            
+            return redirect()->back()->withInput()->withErrors($errors);
+        }
     }
 
     /**
