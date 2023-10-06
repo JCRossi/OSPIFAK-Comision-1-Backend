@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CoberturasController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\EmpleadosController;
+use App\Http\Controllers\ClientesController;
+use App\Http\Controllers\ClientesMenoresController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,6 +41,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('empleados',EmpleadosController::class);
     Route::resource('planes',PlanController::class);
     Route::resource('coberturas',CoberturasController::class);
+    Route::resource('clientes',ClientesController::class);
+    Route::resource('clientesMenores',ClientesMenoresController::class);
 });
 
 require __DIR__.'/auth.php';

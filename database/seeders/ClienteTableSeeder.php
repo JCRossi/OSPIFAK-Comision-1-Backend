@@ -23,8 +23,7 @@ class ClienteTableSeeder extends Seeder
             'direccion' => '123 Calle Principal',
             'telefono' => '1234567890', // Cambia esto al valor deseado
             'plan_id' => 1, // Cambia esto al valor deseado
-            'id_plan' => 1, // Cambia esto al valor deseado
-            'forma_pago' => 'mensual', // Puedes cambiar esto a 'anual' o 'semestral' según necesites
+            'forma_pago' => 'Mensual', // Puedes cambiar esto a 'anual' o 'semestral' según necesites
             'created_at' => now(),
             'updated_at' => now(),
         ];

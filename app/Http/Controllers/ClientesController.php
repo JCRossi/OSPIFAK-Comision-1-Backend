@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cliente;
+use App\Models\Plan;
 use Illuminate\Validation\ValidationException;
 use App\Models\Menor;
 
-class ClienteController extends Controller
+class ClientesController extends Controller
 {
     function _construct(){
-        $this->middleware('can:cliente.index')->only('index');
-        $this->middleware('can:cliente.create')->only('create','store');
+        $this->middleware('can:clientes.index')->only('index');
+        $this->middleware('can:clientes.create')->only('create','store');
     }
 
     /**
@@ -19,7 +20,7 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        //
+        return view('clientes/index');
     }
 
     /**
@@ -27,7 +28,8 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        return view("cliente.create");
+        $planes = Plan::all();
+        return view("clientes/create")->with('planes', $planes);
     }
 
     /**
@@ -35,31 +37,24 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        try{
             $request->validate(
                 [
-                    'usuario' => 'required|string',
-                    'password' => 'required|string',
+                    /*'usuario' => 'required|string',
+                    'password' => 'required|string',*/
                     'nombre' => 'required|string|max:50',
                     'apellido' => 'required|string|max:50',
                     'fecha_nacimiento' => 'required|date',
                     'dni' => 'required|numeric|min:1|max:99999999',
-                    'email' => 'required|email|unique:empleado,email',
+                    'email' => 'required|email|unique:clientes,email',
                     'direccion' => 'required|string|max:100',
                     'telefono' => 'required|numeric',
-                    'plan' => 'required|integer',
-                    'menores' => 'required|array',
-                    'menores.*.dni' => 'required|numeric|min:1|max:99999999',
-                    'menores.*.nombre' => 'required|string|max:50',
-                    'menores.*.apellido' => 'required|string|max:50',
-                    'menores.*.fecha_nacimiento' => 'required|date',
                 ],
                 [
-                    'usuario.required' => 'El usuario no puede ser vacío',
+                   /* 'usuario.required' => 'El usuario no puede ser vacío',
                     'usuario.string' => 'El usuario no tiene el formato adecuado.',
     
                     'password.required' => 'El password no puede ser vacío.',
-                    'password.string' => 'El password no tiene el formato adecuado.',
+                    'password.string' => 'El password no tiene el formato adecuado.',*/
 
                     'nombre.required' => 'El nombre no puede ser vacío',
                     'nombre.string' => 'El nombre no tiene el formato adecuado.',
@@ -88,34 +83,15 @@ class ClienteController extends Controller
                     'telefono.required' => 'El telefono no puede ser vacío',
                     'telefono.numeric' => 'El telefono no tiene el formato adecuado.', 
 
-                    'plan.required' => 'El id del plan es necesario.',
-                    'plan.integer' => 'El id del plan no tiene el formato adecuado.',
-
-                    'menores.required' => 'No puede llegar un arreglo nulo.',
-                    'menores.array' => 'Los menores no tienen el formato adecuado.',
-                    
-                    'menores.*.dni.required' => 'El DNI del menor no puede ser vacío.',
-                    'menores.*.dni.numeric' => 'El DNI del menor no tiene el formato adecuado.',
-                    'menores.*.dni.min' => 'El DNI del menor tiene que ser mayor que 0.',
-                    'menores.*.dni.max' => 'El DNI del menor es más extenso de lo permitido (8 dígitos).',
-                    
-                    'menores.*.nombre.required' => 'El nombre del menor no puede ser vacío',
-                    'menores.*.nombre.string' => 'El nombre del menor no tiene el formato adecuado.',
-                    'menores.*.nombre.max' => 'El nombre del menor es más extenso de lo permitido (50 caracteres).',
-                    
-                    'menores.*.apellido.required' => 'El apellido del menor no puede ser vacío',
-                    'menores.*.apellido.string' => 'El apellido del menor no tiene el formato adecuado.',
-                    'menores.*.apellido.max' => 'El apellido del menor es más extenso de lo permitido (50 caracteres).',
-
-                    'menores.*.fecha_nacimiento.required' => 'La fecha de nacimiento del menor no puede ser vacía.',
-                    'menores.*.fecha_nacimiento.date' => 'La fecha de nacimiento del menor no tiene el formato adecuado.',
-                ]
+                 ]
             );
 
             $cliente = new Cliente();
 
-            $cliente -> usuario = $request -> get('usuario'); 
-            $cliente -> password = $request -> get('password'); 
+            /*$cliente -> usuario = $request -> get('usuario'); 
+            $cliente -> password = $request -> get('password');*/
+            $cliente -> usuario = $request -> get('dni'); 
+            $cliente -> password = $request -> get('dni'); 
             $cliente -> nombre = $request -> get('nombre'); 
             $cliente -> apellido = $request -> get('apellido'); 
             $cliente -> fecha_nacimiento = $request -> get('fecha_nacimiento'); 
@@ -123,32 +99,13 @@ class ClienteController extends Controller
             $cliente -> email = $request -> get('email'); 
             $cliente -> direccion = $request -> get('direccion'); 
             $cliente -> telefono = $request -> get('telefono'); 
-            $cliente -> plan = $request -> get('id_plan'); 
+            $cliente -> plan_id = $request -> get('plan_id');
+            $cliente -> forma_pago = $request -> get('forma_pago'); 
 
             $cliente->save();
             $cliente->setHidden(['created_at', 'updated_at']);
-
-            foreach ($request->menores as $detalle) {
-                $menor = new Menor();
-                $menor->id_cliente = $cliente->id;
-                $menor->nombre = $detalle['nombre'];
-                $menor->apellido = $detalle['apellido'];
-                $menor->fecha_nacimiento = $detalle['fecha_nacimiento'];
-                $menor->dni = $detalle['dni'];
-                $menor->save();
-                $menor->setHidden(['created_at', 'updated_at']);
-            }
             
-        }
-        catch(ValidationException $e) {
-            $errors = $e->validator->errors()->all();
-            
-            return redirect()->back()->withInput()->withErrors($errors);
-        }
-    }
-
-    public function cargaDeMenores(){
-        return view("clienteMenor.create");
+            return redirect()->to('/clientes')->with('success', 'Cliente dado de alta correctamente');
     }
 
     /**

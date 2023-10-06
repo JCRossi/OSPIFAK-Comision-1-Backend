@@ -22,12 +22,11 @@ return new class extends Migration
             $table->string("email");
             $table->string("direccion");
             $table->integer("telefono");
-            $table->bigInteger("id_plan");
             $table->foreignId('plan_id')->constrained()
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
             $table->timestamps();
-            $table->enum('forma_pago', ['mensual', 'anual', 'semestral']);
+            $table->enum('forma_pago', ['Mensual', 'Anual', 'Semestral']);
         });
     }
 
