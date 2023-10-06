@@ -16,10 +16,6 @@
             "dest": "/view_images/$1"
         },
         {
-            "src": "/dist/(.*)",
-            "dest": "/dist/$1"
-        },
-        {
             "src": "/(.*)",
             "dest": "/api/index.php"
         }      
@@ -38,7 +34,7 @@
 
         "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
-        "SESSION_DRIVER": "cookie",
+        "SESSION_DRIVER": "database",
         "SSR_TEMP_PATH": "/tmp/ssr",
         "NODE_PATH": "node"
     }

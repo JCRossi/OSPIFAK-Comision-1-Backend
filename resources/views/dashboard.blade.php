@@ -25,14 +25,23 @@
         <div class="navbar">
             <div class="container text-center">
                 <ul class="nav">
+                    @can('empleados.index')
                     <li class="{{ Request::is('empleados*') ? 'active' : '' }}">
-                        <a href="{{ url('/empleados') }}">Gestión de empleados</a>
-                    </li>                    
-                    <li class="{{ Request::is('planes*') ? 'active' : '' }}">
-                        <a href="{{ url('/planes') }}">Gestión de planes</a>
+                        <a href="{{ url('/empleados') }}">Gestión de Empleados</a>
                     </li>
+                    @endcan    
+                    @can('planes.index')            
+                    <li class="{{ Request::is('planes*') ? 'active' : '' }}">
+                        <a href="{{ url('/planes') }}">Gestión de Planes</a>
+                    </li>
+                    @endcan
+                    @can('cliente.index')
+                    <li class="{{ Request::is('planes*') ? 'active' : '' }}">
+                        <a href="{{ url('/planes') }}">Gestión de Clientes</a>
+                    </li>
+                    @endcan
                     <li class="{{ Request::is('solicitudes*') ? 'active' : '' }}">
-                        <a href="{{ url('/solicitudes') }}">Gestión de solicitudes</a>
+                        <a href="{{ url('/solicitudes') }}">Gestión de Solicitudes</a>
                     </li>
                     <!-- Agrega más secciones según sea necesario -->
                 </ul>
@@ -42,5 +51,6 @@
         <div class="container text-center">
             @yield('section_content') <!-- Aquí se incluirá el contenido específico de la sección -->
         </div>
+
     </div>
 @endsection
