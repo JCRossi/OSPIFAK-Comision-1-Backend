@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function login($usuario, $password)
     {
-        $credentials = $request->only('usuario', 'password');
+        $cliente = DB::table('clientes')
+            ->where('usuario', $usuario)
+            ->where('password', $password)
+            ->first();
 
-        if (Auth::attempt($credentials)) {
-            return response()->json(['message' => 'Inicio de sesión exitoso']);
+        if ($cliente) {
+            return response()->json(['message' => 'Autenticación exitosa'],200);
+        } else {
+            return response()->json(['message' => 'Credenciales incorrectas'], 401);
         }
-        //
-        return response()->json(['error' => 'Credenciales incorrectas'], 401);
     }
 }

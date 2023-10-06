@@ -14,7 +14,7 @@ class ClienteTableSeeder extends Seeder
     {
         $datosCliente = [
             'usuario' => 'cliente',
-            'password' => bcrypt('contraseña123'),
+            'password' => 'contraseña123',
             'nombre' => 'Cliente',
             'apellido' => 'Fake',
             'fecha_nacimiento' => '1990-01-01',
