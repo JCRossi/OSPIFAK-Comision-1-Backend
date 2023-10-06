@@ -4,6 +4,7 @@ use App\Http\Controllers\EmpleadosController;
 use App\Http\Controllers\MenoresController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ClientesController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
