@@ -7,12 +7,17 @@ use Illuminate\Http\Request;
 
 class ClientesMenoresController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return view("clientesMenores/index");
+        $ultimoCliente = Cliente::latest('id')->first();
+
+        $menoresACargo = [];
+
+        if ($ultimoCliente) {
+            $menoresACargo = $ultimoCliente->menores;
+        }
+
+        return view('clientesMenores/index', compact('menoresACargo'));
     }
 
     /**
@@ -33,8 +38,7 @@ class ClientesMenoresController extends Controller
                 'nombre' => 'required|string|max:50',
                 'apellido' => 'required|string|max:50',
                 'fecha_nacimiento' => 'required|date',
-                'dni' => 'required|numeric|min:1|max:99999999',
-                'telefono' => 'required|numeric',
+                'dni' => 'required|numeric|min:1|max:99999999|unique:cliente_menor,dni',
             ],
             [
                 'nombre.required' => 'El nombre no puede ser vacío',
@@ -52,25 +56,25 @@ class ClientesMenoresController extends Controller
                 'dni.numeric' => 'El DNI no tiene el formato adecuado.',
                 'dni.min' => 'El DNI ingresado tiene que ser mayor que 0.',
                 'dni.max' => 'El DNI ingresado es más extenso de lo permitido (8 dígitos).',
+                'dni.unique' => 'Ya existe un menor registrado con el email ingresado.',
 
-                'telefono.required' => 'El telefono no puede ser vacío',
-                'telefono.numeric' => 'El telefono no tiene el formato adecuado.', 
             ]
         );
 
+        $clienteId = Cliente::max('id');
+
         $menor = new Menor();
 
-        $menor->id_cliente = 9999;
+        $menor->cliente_id = $clienteId;
         $menor->nombre = $request -> get('nombre'); 
         $menor->apellido = $request -> get('apellido'); 
         $menor->fecha_nacimiento = $request -> get('fecha_nacimiento'); 
         $menor->dni = $request -> get('dni');
-        $menor->telefono = $request -> get('telefono'); 
 
         $menor->save();
         $menor->setHidden(['created_at', 'updated_at']);
     
-        return redirect()->back()->with('success', 'Menor dado de alta con éxito');
+        return redirect()->to('/clientesMenores')->with('success', 'Menor dado de alta con éxito');
     }
 
     /**
