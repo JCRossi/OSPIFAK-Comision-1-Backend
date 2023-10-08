@@ -10,7 +10,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $usuario = $request->input('usuario');
-    $password = $request->input('password');
+        $password = $request->input('password');
 
         $cliente = DB::table('clientes')
             ->where('usuario', $usuario)
