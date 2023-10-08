@@ -19,7 +19,11 @@ class AuthController extends Controller
         if ($cliente) {
             return response()->json(['message' => 'Autenticación exitosa']);
         } else {
-            return response()->json(['message' => 'Credenciales incorrectas '+$usuario+' '+$password], 401);
+            return response()->json([
+                'message' => 'Autenticación NO exitosa',
+                'usuario' => $usuario,
+                'password' => $password,
+            ], 401);
         }
     }
 }
