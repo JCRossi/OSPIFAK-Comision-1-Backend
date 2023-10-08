@@ -44,7 +44,7 @@ class ClientesController extends Controller
                     'nombre' => 'required|string|max:50',
                     'apellido' => 'required|string|max:50',
                     'fecha_nacimiento' => 'required|date',
-                    'dni' => 'required|numeric|min:1|max:99999999',
+                    'dni' => 'required|numeric|min:1|max:99999999|unique:clientes,dni',
                     'email' => 'required|email|unique:clientes,email',
                     'direccion' => 'required|string|max:100',
                     'telefono' => 'required|numeric',
@@ -71,6 +71,7 @@ class ClientesController extends Controller
                     'dni.numeric' => 'El DNI no tiene el formato adecuado.',
                     'dni.min' => 'El DNI ingresado tiene que ser mayor que 0.',
                     'dni.max' => 'El DNI ingresado es más extenso de lo permitido (8 dígitos).',
+                    'dni.unique' => 'Ya existe un cliente registrado con el email ingresado.',
 
                     'email.required' => 'El email no puede ser vacío.',
                     'email.email' => 'El email no tiene el formato adecuado.',
@@ -105,7 +106,15 @@ class ClientesController extends Controller
             $cliente->save();
             $cliente->setHidden(['created_at', 'updated_at']);
             
-            return redirect()->to('/clientes')->with('success', 'Cliente dado de alta correctamente');
+            /*return redirect()->to('/clientes')->with('success', 'Cliente dado de alta correctamente');*/
+
+            if ($request->input('action') === 'guardar') {
+                // Redirige al usuario a la página /clientes si se presionó "Guardar datos"
+                return redirect()->to('/clientes')->with('success', 'Cliente dado de alta correctamente');
+            } else{
+                // Redirige al usuario a la página /clientesMenores si se presionó "+ Menor a cargo"
+                return redirect()->to('/clientesMenores')->with('success', 'Cliente dado de alta correctamente');
+            }
     }
 
     /**

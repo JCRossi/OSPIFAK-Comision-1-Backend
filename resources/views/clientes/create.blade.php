@@ -136,16 +136,13 @@
                             }
                         </script>
                     </div>
-                    <div class="form-group mb-3 mt-4">
-                        <label class="form-label text" style="font-size: x-large; color: #78d278;">A cargo</label>
-                    </div>
                 </div>
                 <div class="form-group">
-                    <a href="/clientesMenores/create" class="btn btn-outline-success">+ Menor a cargo</a>
+                    <button type="submit" name="action" value="menor" class="btn btn-outline-success">+ Menor a cargo</button>
                 </div>
                 <div class="form-group float-end">
                     <a href="/clientes" class="btn btn-outline-primary">Cancelar</a>
-                    <button type="submit" class="btn btn-outline-success">Guardar datos</button>
+                    <button type="submit" name="action" value="guardar" class="btn btn-outline-success">Guardar datos</button>
                 </div>
             </form> 
         </div>

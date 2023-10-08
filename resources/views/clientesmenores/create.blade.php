@@ -5,13 +5,13 @@
     <div class="card col-8 offset-2">
         <div class="card-body rounded" style="border-radius: 20px;">
             @include('messages')
-            <form action="/clienteMenor" method="POST">
+            <form action="/clientesMenores" method="POST">
                 @csrf
                 <div class="row">
                     <div class="col-md-6">
                         <div class="input-group mb-3">
                             <span class="input-group-text" style= "font-size: x-large; background-color: white;" id="dni">DNI:</span>
-                            <input type="text" class="form-control @error('dni') is-invalid @enderror bg-white" placeholder="42000000" aria-label="dni" aria-describedby="dni">
+                            <input type="text" name="dni" class="form-control @error('dni') is-invalid @enderror bg-white" placeholder="42000000" aria-label="dni" aria-describedby="dni">
                             @error('dni')
                                 <span class="tex-danger">
                                     <strong>{{$message}}</strong>
@@ -21,7 +21,7 @@
 
                         <div class="input-group mb-3">
                             <span class="input-group-text" style= "background-color: white;" id="apellido">Apellido:</span>
-                            <input type="text" class="form-control @error('apellido') is-invalid @enderror bg-white" placeholder="River" aria-label="apellido" aria-describedby="apellido">
+                            <input type="text" name="apellido" class="form-control @error('apellido') is-invalid @enderror bg-white" placeholder="River" aria-label="apellido" aria-describedby="apellido">
                             @error('apellido')
                                 <span class="tex-danger">
                                     <strong>{{$message}}</strong>
@@ -31,7 +31,7 @@
                         
                         <div class="input-group mb-3">
                             <span class="input-group-text" style= "background-color: white;" id="nombre">Nombre:</span>
-                            <input type="text" class="form-control @error('nombre') is-invalid @enderror bg-white" placeholder="Plate" aria-label="nombre" aria-describedby="nombre">
+                            <input type="text" name="nombre" class="form-control @error('nombre') is-invalid @enderror bg-white" placeholder="Plate" aria-label="nombre" aria-describedby="nombre">
                             @error('nombre')
                                 <span class="tex-danger">
                                     <strong>{{$message}}</strong>
@@ -43,16 +43,6 @@
                             <span class="input-group-text" style= "background-color: white;" id="fecha_nacimiento">Fecha de Nacimiento:</span>
                             <input type="date" name="fecha_nacimiento" class="form-control @error('fecha_nacimiento') is-invalid @enderror bg-white" aria-label="fecha_nacimiento" aria-describedby="fecha_nacimiento">
                             @error('fecha_nacimiento')
-                                <span class="tex-danger">
-                                    <strong>{{$message}}</strong>
-                                </span>
-                            @enderror
-                        </div>
-
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" style= "background-color: white;" id="telefono">Teléfono:</span>
-                            <input type="text" class="form-control @error('telefono') is-invalid @enderror bg-white" placeholder="2018091218" aria-label="telefono" aria-describedby="telefono">
-                            @error('telefono')
                                 <span class="tex-danger">
                                     <strong>{{$message}}</strong>
                                 </span>
