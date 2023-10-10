@@ -14,16 +14,13 @@ class AuthController extends Controller
         
         $cliente = DB::table('clientes')
             ->where('usuario', $usuario)
+            ->where('password', $password)
             ->first();
 
         if ($cliente) {
             return response()->json(['message' => 'Autenticación exitosa']);
         } else {
-            return response()->json([
-                'message' => 'Autenticación NO exitosa',
-                'usuario' => $usuario,
-                'password' => $password,
-            ], 401);
+            return response()->json(['message' => 'Autenticación NO exitosa'], 401);
         }
     }
 }
