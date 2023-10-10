@@ -18,9 +18,40 @@ class ClientesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    
+
+     public function index(Request $request)
     {
-        return view('clientes/index');
+        $query = Cliente::leftJoin('plans', 'clientes.plan_id', '=', 'plans.id')
+            ->select('clientes.*', 'plans.nombre as plan_nombre');
+
+        if ($request->has('dni')) {
+            $dni = $request->input('dni');
+            if (!empty($dni)) {
+                $query->where('dni', $dni);
+            }
+        }
+
+        $clientes = $query->get();
+
+        // Verificar si se encontraron resultados
+        if ($clientes->isEmpty() && !empty($dni)) {
+            // Si no se encontraron resultados y se proporcionó un DNI, muestra un mensaje
+            $mensaje = "Ningún cliente coincide con el filtro aplicado.";
+            return view('clientes/index', compact('mensaje'));
+        }
+
+        return view('clientes/index', compact('clientes'));
+    }
+
+
+     
+
+
+    public function getCliente(string $id)
+    {
+        $cliente = Cliente::find($id);
+        return view('clientes/index') -> with('clientes', $cliente);
     }
 
     /**
@@ -122,7 +153,9 @@ class ClientesController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $cliente = Cliente::find($id);
+        $menores = Menor::where('cliente_id', $id)->get();
+        return view('clientes/show', compact('cliente', 'menores'));
     }
 
     /**

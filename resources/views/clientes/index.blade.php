@@ -14,5 +14,41 @@
                 <span style="color: #78d278;" class="text-xs">Nuevo cliente</span>
             </div>
         </a>
+
+        <form method="GET" action="{{ url('/clientes') }}" class="mb-4">
+            <div class="input-group">
+                <input type="text" name="dni" class="form-control" placeholder="Buscar por DNI" value="{{ request('dni') }}">
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+        </form>
+
+        <table class="table table-striped mt-4">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th scope="col">DNI titular</th>
+                    <th scope="col">Apellido y nombre</th>
+                    <th scope="col">Plan</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+            @if (isset($mensaje))
+                <tr>
+                    <td colspan="4">{{ $mensaje }}</td>
+                </tr>
+            @else
+                @foreach($clientes as $cliente)
+                    <tr>
+                        <td>{{ $cliente->dni }}</td>
+                        <td>{{ $cliente->apellido }} {{ $cliente->nombre }}</td>
+                        <td>{{ $cliente->plan_nombre }}</td>
+                        <td>
+                            <a href="/clientes/{{$cliente->id}}" class="btn btn-light">Detalle</a>
+                        </td>
+                    </tr>
+                @endforeach
+            @endif
+            </tbody>
+        </table>
     </div>
 @endsection
