@@ -18,29 +18,24 @@ return new class extends Migration
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
 
-            $table->string("cliente_nombre");
 
             $table->foreignId('medico_id')->constrained()
                   ->onUpdate('cascade')
                   ->onDelete('cascade');
 
-            $table->string("medico_nombre");
-
-            $table->string("medico_matricula");
-
             $table->string("nombre_instituto");
 
-            $table->date("fecha");
+            $table->date("fecha_solicitud");
 
             $table->string("cbu");
 
             $table->string('orden_medica');
 
             $table->string('factura');
-
             
-
             $table->enum('tipo_reintegro', ['insumo', 'estudio']);
+
+            $table->string('estado');
 
             $table->timestamps();
         });
