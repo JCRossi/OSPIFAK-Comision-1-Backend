@@ -15,7 +15,7 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     
     <!-- App Icon -->
-    <link rel="shortcut icon" href="{{ asset('imagen.jpeg') }}">
+    <link rel="shortcut icon" href="{{ asset('view_images/imagen.jpeg') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 
 
@@ -29,7 +29,7 @@
             <div class="container" style="text-align: center;">
 
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{ asset('imagen.jpeg') }}" alt="Logo" height="70" width="90">
+                    <img src="{{ asset('view_images/imagen.jpeg') }}" alt="Logo" height="70" width="90">
                     
                 </a>      
 
