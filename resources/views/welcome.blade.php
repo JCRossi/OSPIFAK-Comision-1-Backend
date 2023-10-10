@@ -13,7 +13,7 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
         
         <!-- App Icon -->
-        <link rel="shortcut icon" href="{{ asset('imagen.jpeg') }}">
+        <link rel="shortcut icon" href="{{ asset('view_images/imagen.jpeg') }}">
 
         <!-- Styles -->
         <style>
@@ -40,7 +40,7 @@
 
     <body class="antialiased">
         <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
-            <img src="imagen.jpeg" alt="Imagen de fondo" class="background-image">
+            <img src="{{ asset('view_images/imagen.jpeg') }}" alt="Imagen de fondo" class="background-image">
         </div>
     </body>
 </html>
