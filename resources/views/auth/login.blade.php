@@ -48,8 +48,7 @@
         </form>
 
         <div style="position: absolute;  bottom: 10px; right: 10px;">
-            <img src="public/view_images/imagen.jpeg" alt="Imagen" style="width: 100px; height: 90px; opacity: 0.7;">
-
+            <img src="{{ asset('view_images/imagen.jpeg') }}" alt="Imagen" style="width: 100px; height: 90px; opacity: 0.7;">
         </div>  
        
     </div>
