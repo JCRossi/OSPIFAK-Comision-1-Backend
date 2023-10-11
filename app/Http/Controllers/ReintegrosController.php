@@ -35,7 +35,7 @@ class ReintegrosController extends Controller
                     'cliente_id' => 'required|integer|max:50',
                     'medico_id' => 'required|integer|max:50',
                     'nombre_instituto' => 'required|string|max:50',
-                    'fecha_solicitud' => 'required|date',
+                    'fecha_estudio_compra' => 'required|date',
                     'cbu' => 'required|string|max:100',
                     'orden_medica' => 'required|file|mimes:pdf',
                     'factura' => 'required|date',
@@ -55,8 +55,8 @@ class ReintegrosController extends Controller
                     'nombre_instituto.string' => 'El nombre no tiene el formato adecuado.',
                     'nombre_instituto.max' => 'El nombre ingresado es más extenso de lo permitido (50 caracteres).',
 
-                    'fecha_solicitud.required' => 'La fecha de nacimiento no puede ser vacía.',
-                    'fecha_solicitud.date' => 'La fecha de nacimiento no tiene el formato adecuado.',
+                    'fecha_estudio_compra.required' => 'La fecha de nacimiento no puede ser vacía.',
+                    'fecha_estudio_compra.date' => 'La fecha de nacimiento no tiene el formato adecuado.',
 
                     'cbu.required' => 'El CBU no puede ser vacío.',
                     'cbu.string' => 'El nombre no tiene el formato adecuado.',
@@ -81,7 +81,7 @@ class ReintegrosController extends Controller
             $reintegro -> cliente_id = $request -> get('cliente_id'); 
             $reintegro -> medico_id = $request -> get('medico_id'); 
             $reintegro -> nombre_instituto = $request -> get('nombre_instituto'); 
-            $reintegro -> fecha_solicitud = $request -> get('fecha'); 
+            $reintegro -> fecha_estudio_compra = $request -> get('fecha'); 
             $reintegro -> cbu = $request -> get('cbu'); 
             $reintegro -> orden_medica = $request -> get('orden_medica'); 
             $reintegro -> factura = $request -> get('factura'); 
@@ -122,9 +122,13 @@ class ReintegrosController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id, string $estado)
     {
-        //
+        $reintegro = Reintegro::findOrFail($id);
+        $reintegro->estado = $estado;
+        $reintegro->save();
+
+        return redirect()->to('solicitudes/reintegros')->with('success', 'Estado del reintegro con id ' . ($id) . ' cambiado a ' . ($estado) . ' con éxito');
     }
 
     /**

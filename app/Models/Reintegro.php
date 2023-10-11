@@ -9,7 +9,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Reintegro extends Model
 {
-    protected $fillable = ['cliente_id','medico_id','nombre_instituto','fecha_solicitud','cbu','orden_medica','factura','tipo_reintegro', 'estado'];
+    protected $fillable = ['cliente_id','medico_id','nombre_instituto','fecha_estudio_compra','cbu','orden_medica','factura','tipo_reintegro', 'estado'];
     protected $guarded = ['id'];
 
     use HasApiTokens;

@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('clientesMenores',ClientesMenoresController::class);
     Route::get('solicitudes', [SolicitudesController::class, 'index']);
     Route::resource('solicitudes/reintegros', ReintegrosController::class);
+    Route::patch('solicitudes/reintegros/{id}/{estado}', [ReintegrosController::class, 'update'])->name('reintegros/update');
 });
 
 require __DIR__.'/auth.php';

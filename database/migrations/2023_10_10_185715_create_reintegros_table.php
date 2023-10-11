@@ -25,7 +25,7 @@ return new class extends Migration
 
             $table->string("nombre_instituto");
 
-            $table->date("fecha_solicitud");
+            $table->date("fecha_estudio_compra");
 
             $table->string("cbu");
 

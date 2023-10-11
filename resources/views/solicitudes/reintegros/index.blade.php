@@ -1,12 +1,6 @@
 @extends('solicitudes/index')
 
 @section('tipoDeSolicitud_content')
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-    
     <div class="table-responsive">
         <table class="table" id="reintegros-table">
             <thead>
@@ -23,7 +17,7 @@
                     <tr class="reintegro-row" data-url="/solicitudes/reintegros/{{ $reintegroActual->id }}">
                         <td>{{ $reintegroActual->cliente->dni }}</td>
                         <td>{{ $reintegroActual->cliente->apellido }} {{ $reintegroActual->cliente->nombre }}</td>
-                        <td>{{ $reintegroActual->fecha_solicitud }}</td>
+                        <td>{{ $reintegroActual->fecha_estudio_compra }}</td>
                         <td>{{ $reintegroActual->estado }}</td>
                     </tr>
                 @endforeach
