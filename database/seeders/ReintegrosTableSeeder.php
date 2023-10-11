@@ -22,7 +22,7 @@ class ReintegrosTableSeeder extends Seeder
             'orden_medica' => 'examplefilename',
             'factura' => 'examplefilename2',
             'tipo_reintegro' => 'insumo',
-            'estado' => 'pendiente',
+            'estado' => 'Pendiente',
             'created_at' => now(),
             'updated_at' => now(),
         ];

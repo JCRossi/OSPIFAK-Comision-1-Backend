@@ -46,13 +46,13 @@
         <div class="form-group mt-3 float-end mt-3">
             <a href="{{ url('/solicitudes/reintegros') }}" class="btn btn-outline-info">Cancelar</a>
             
-            <form action="{{ route('reintegros/update', ['id' => $reintegro->id, 'estado' => 'aprobado']) }}" method="POST" style="display: inline-block;">
+            <form action="{{ route('reintegros/update', ['id' => $reintegro->id, 'estado' => 'Aprobada']) }}" method="POST" style="display: inline-block;">
                 @csrf
                 @method('PATCH')
                 <button type="submit" class="btn btn-outline-success">Aprobar</button>
             </form>
 
-            <form action="{{ route('reintegros/update', ['id' => $reintegro->id, 'estado' => 'rechazado']) }}" method="POST" style="display: inline-block;">
+            <form action="{{ route('reintegros/update', ['id' => $reintegro->id, 'estado' => 'Rechazada']) }}" method="POST" style="display: inline-block;">
                 @csrf
                 @method('PATCH')
                 <button type="submit" class="btn btn-outline-danger">Rechazar</button>

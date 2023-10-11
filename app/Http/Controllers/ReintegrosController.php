@@ -7,15 +7,33 @@ use App\Models\Reintegro;
 
 class ReintegrosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $reintegros = Reintegro::all();
+        $query = Reintegro::query();
+
+        // Aplicar filtros
+        if ($request->has('dni')) {
+            $query->whereHas('cliente', function ($subquery) use ($request) {
+                $subquery->where('dni', $request->input('dni'));
+            });
+        }
+
+        if ($request->has('estado')) {
+            $query->where('estado', $request->input('estado'));
+        }
+
+        if ($request->has('desde')) {
+            $query->whereDate('created_at', '>=', $request->input('desde'));
+        }
+
+        if ($request->has('hasta')) {
+            $query->whereDate('created_at', '<=', $request->input('hasta'));
+        }
+
+        $reintegros = $query->get();
+
         return view('solicitudes/reintegros/index')->with('reintegros', $reintegros);
     }
-
     /**
      * Show the form for creating a new resource.
      */
