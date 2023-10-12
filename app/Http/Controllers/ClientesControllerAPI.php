@@ -49,7 +49,7 @@ class ClientesControllerAPI extends Controller
 
                     'email.required' => 'El email no puede ser vacío.',
                     'email.email' => 'El email no tiene el formato adecuado.',
-                    'email.unique' => 'Ya existe un empleado registrado con el email ingresado.',
+                    'email.unique' => 'Ya existe un cliente registrado con el email ingresado.',
 
                     'direccion.required' => 'La direccion no puede ser vacía',
                     'direccion.string' => 'La direccion no tiene el formato adecuado.',
