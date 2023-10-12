@@ -19,7 +19,7 @@ return new class extends Migration
             $table->float("precio_adultos_jovenes"); //21-35
             $table->float("precio_adultos"); //35-55
             $table->float("precio_adultos_mayores"); //+55
-            
+
             $table->timestamps();
         });
     }
