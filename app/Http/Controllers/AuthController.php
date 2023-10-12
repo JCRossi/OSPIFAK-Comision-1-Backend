@@ -10,7 +10,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $usuario = $request->usuario;
-       $password = $request->password;
+        $password = $request->password;
         
         $cliente = DB::table('clientes')
             ->where('usuario', $usuario)
@@ -20,7 +20,11 @@ class AuthController extends Controller
         if ($cliente) {
             return response()->json(['message' => 'Autenticación exitosa']);
         } else {
-            return response()->json(['message' => 'Autenticación NO exitosa'], 401);
+            return response()->json([
+                'message' => 'Autenticación NO exitosa',
+                'usuario' => $usuario,
+                'password' => $password,
+            ], 401);
         }
     }
 }

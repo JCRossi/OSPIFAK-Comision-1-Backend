@@ -11,10 +11,10 @@ class ClientesControllerAPI extends Controller
 
     public function registrar(Request $request)
     {
-            $request->validate(
+     /*       $request->validate(
                 [
-                    /*'usuario' => 'required|string',
-                    'password' => 'required|string',*/
+                    'usuario' => 'required|string',
+                    'password' => 'required|string',
                     'nombre' => 'required|string|max:50',
                     'apellido' => 'required|string|max:50',
                     'fecha_nacimiento' => 'required|date',
@@ -24,11 +24,11 @@ class ClientesControllerAPI extends Controller
                     'telefono' => 'required|numeric',
                 ],
                 [
-                   /* 'usuario.required' => 'El usuario no puede ser vacío',
+                    'usuario.required' => 'El usuario no puede ser vacío',
                     'usuario.string' => 'El usuario no tiene el formato adecuado.',
     
                     'password.required' => 'El password no puede ser vacío.',
-                    'password.string' => 'El password no tiene el formato adecuado.',*/
+                    'password.string' => 'El password no tiene el formato adecuado.',
 
                     'nombre.required' => 'El nombre no puede ser vacío',
                     'nombre.string' => 'El nombre no tiene el formato adecuado.',
@@ -60,7 +60,7 @@ class ClientesControllerAPI extends Controller
 
                  ]
             );
-
+*/
             $cliente = DB::table('clientes')->where('dni', $request -> dni)->first();
             if ($cliente) {
                 return response()->json(['error' => 'El cliente con DNI ' . $request -> dni . ' ya existe.'], 404);
