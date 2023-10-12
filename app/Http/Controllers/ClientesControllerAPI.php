@@ -61,7 +61,7 @@ class ClientesControllerAPI extends Controller
                  ]
             );
 */
-            $cliente = DB::table('clientes')->where('dni', $request -> dni)->first();
+            $cliente = DB::table('clientes')->where('dni', $request -> get('dni'))->first();
             if ($cliente) {
                 return response()->json(['error' => 'El cliente con DNI ' . $request -> dni . ' ya existe.'], 404);
             }
@@ -69,17 +69,17 @@ class ClientesControllerAPI extends Controller
             $cliente = new Cliente();
             /*$cliente -> usuario = $request -> usuario'); 
             $cliente -> password = $request -> password');*/
-            $cliente -> usuario = $request -> dni; 
-            $cliente -> password = $request -> dni; 
-            $cliente -> nombre = $request -> nombre; 
-            $cliente -> apellido = $request -> apellido; 
-            $cliente -> fecha_nacimiento = $request -> fecha_nacimiento; 
-            $cliente -> dni = $request -> dni; 
-            $cliente -> email = $request -> email; 
-            $cliente -> direccion = $request -> direccion; 
-            $cliente -> telefono = $request -> telefono; 
-            $cliente -> plan_id = $request -> plan_id;
-            $cliente -> forma_pago = $request -> forma_pago; 
+            $cliente -> usuario = $request -> get('dni'); 
+            $cliente -> password = $request -> get('dni'); 
+            $cliente -> nombre = $request -> get('nombre'); 
+            $cliente -> apellido = $request -> get('apellido'); 
+            $cliente -> fecha_nacimiento = $request -> get('fecha_nacimiento'); 
+            $cliente -> dni = $request -> get('dni'); 
+            $cliente -> email = $request -> get('email'); 
+            $cliente -> direccion = $request -> get('direccion'); 
+            $cliente -> telefono = $request -> get('telefono'); 
+            $cliente -> plan_id = $request -> get('plan_id');
+            $cliente -> forma_pago = $request -> get('forma_pago');  
             $cliente->save();
             $cliente->setHidden(['created_at', 'updated_at']);
             return response()->json(['message' => 'El cliente fue creado con éxito'], 201);
