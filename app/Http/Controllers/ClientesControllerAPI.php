@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\Prestacion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class ClientesControllerAPI extends Controller
 {
@@ -81,4 +83,62 @@ class ClientesControllerAPI extends Controller
             $cliente->setHidden(['created_at', 'updated_at']);
             return response()->json(['message' => 'El cliente fue creado con éxito'], 201);
     }
+
+    public function guardarPrestacion(Request $request){
+        $request -> validate(
+            [
+                'nombre_medico' => 'required|string|max:50',
+                'matricula_medico' => 'required|string|max:50',
+                'instituto' => 'required|string|max:50',
+                'fecha_turno' => 'required|date',
+                'comentario' => 'max:500'
+            ],
+            [
+                'nombre_medico.required' => 'El nombre del médico no puede ser vacío',
+                'nombre_medico.string' => 'El nombre del médico no tiene el formato adecuado.',
+                'nombre_medico.max' => 'El nombre del médico ingresado es más extenso de lo permitido (50 caracteres).',
+
+                'matricula_medico.required' => 'La matrícula no puede ser vacía',
+                'matricula_medico.string' => 'La matrícula no tiene el formato adecuado.',
+                'matricula_medico.max' => 'La matrícula ingresada es más extensa de lo permitido (50 caracteres).',
+                
+                'instituto.required' => 'El nombre del instituto no puede ser vacío',
+                'instituto.string' => 'El nombre del instituto no tiene el formato adecuado.',
+                'instituto.max' => 'El nombre del instituto ingresado es más extenso de lo permitido (50 caracteres).',
+
+                'fecha_turno.required' => 'La fecha del turno no puede ser vacía.',
+                'fecha_turno.date' => 'La fecha del turno no tiene el formato adecuado.',
+
+                'comentario.max' => 'El comentario ingresado es más extenso de lo permitido (500 caracteres).',
+
+             ]
+        );
+
+        $prestacion = new Prestacion();
+        $prestacion->cliente_id = $request->user()->id;
+        
+        if($request->cliente_menor != null)
+            $prestacion->cliente_menor_id = $request->cliente_menor->id;
+        else
+            $prestacion->cliente_menor_id = -1;
+        
+        $prestacion->nombre_medico = $request->nombre_medico;
+        $prestacion->matricula_medico = $request->matricula_medico;
+        $prestacion->instituto = $request->instituto;
+        $prestacion->fecha_turno = $request->fecha_turno;
+        $prestacion->fecha_solicitud = Carbon::now();
+        $prestacion->estado = "Pendiente";
+        $prestacion->nombre_prestacion = $request->nombre_prestacion;
+        $prestacion->comentario = $request->comentario;
+        $prestacion->save();
+
+        return response()->json(['message' => 'La solicitud se realizó con éxito'], 201);
+    }
+
+    public function recuperarPrestaciones(Request $request){
+        $clienteId = $request->user()->id;
+        $prestaciones = Prestacion::where('cliente_id', $clienteId)->get();
+        return response()->json($prestaciones);
+    }
+
 }
