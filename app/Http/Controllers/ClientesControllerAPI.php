@@ -19,7 +19,7 @@ class ClientesControllerAPI extends Controller
                     'apellido' => 'required|string|max:50',
                     'fecha_nacimiento' => 'required|date',
                     'dni' => 'required|numeric|min:1|max:99999999|unique:clientes,dni',
-                    'email' => 'required|email|unique:clientes,email',
+                    'email' => 'required|email',
                     'direccion' => 'required|string|max:100',
                     'telefono' => 'required|numeric',
                 ],
@@ -45,11 +45,10 @@ class ClientesControllerAPI extends Controller
                     'dni.numeric' => 'El DNI no tiene el formato adecuado.',
                     'dni.min' => 'El DNI ingresado tiene que ser mayor que 0.',
                     'dni.max' => 'El DNI ingresado es más extenso de lo permitido (8 dígitos).',
-                    'dni.unique' => 'Ya existe un cliente registrado con el email ingresado.',
+                    'dni.unique' => 'Ya existe un cliente registrado con el DNI ingresado.',
 
                     'email.required' => 'El email no puede ser vacío.',
                     'email.email' => 'El email no tiene el formato adecuado.',
-                    'email.unique' => 'Ya existe un cliente registrado con el email ingresado.',
 
                     'direccion.required' => 'La direccion no puede ser vacía',
                     'direccion.string' => 'La direccion no tiene el formato adecuado.',
