@@ -14,16 +14,19 @@ class AuthController extends Controller
     {
         $usuario = $request->usuario;
         $password = $request->password;
+
         $cliente = DB::table('clientes')
             ->where('usuario', $usuario)
             ->where('password', $password)
             ->first();
 
         if ($cliente) {
+            $token = $cliente->createToken('Api token of ' . $cliente->usuario)->accessToken; // Corregir la generación del token
             return response()->json([
                 'usuario' => $cliente->usuario,
-                'token' => $cliente->createToken('Api token of'. $cliente->usuario)->plainTextToken,
-                'message' => 'Autenticación exitosa']);
+                'token' => $token, // Utilizar el token generado correctamente
+                'message' => 'Autenticación exitosa'
+            ]);
         } else {
             return response()->json([
                 'message' => 'Autenticación NO exitosa'], 401);
