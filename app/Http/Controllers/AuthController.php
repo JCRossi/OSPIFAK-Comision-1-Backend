@@ -6,25 +6,30 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Cliente;
 use App\Models\Menor;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        $usuario = $request->usuario;
-        $password = $request->password;
-        
-        $cliente = DB::table('clientes')
-            ->where('usuario', $usuario)
-            ->where('password', $password)
-            ->first();
+        if($this->usuarioValido($request)){
+            $cliente = Cliente::where('usuario', $request->usuario)->first();
 
-        if ($cliente) {
-            return response()->json(['message' => 'Autenticación exitosa']);
-        } else {
-            return response()->json([
-                'message' => 'Autenticación NO exitosa'], 401);
+            $jsonResponse = $this->success([
+                'cliente' => $cliente,
+                'token' => $cliente->createToken('Api token of '. $cliente->usuario)->plainTextToken
+            ], 'Cliente logueado correctamente', 200);
+        }else{
+            $jsonResponse = $this->error('', 'Usuario o contraseña incorrecta', 401);
         }
+        return $jsonResponse;
+    }
+
+    private function usuarioValido(Request $request){
+        return Auth::guard('clientes')->attempt([
+            "usuario" => $request->usuario,
+            "password" => $request->password
+        ]);
     }
 
     public function datos(Request $request)
