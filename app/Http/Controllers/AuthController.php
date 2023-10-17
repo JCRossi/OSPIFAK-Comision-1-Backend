@@ -12,17 +12,22 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        if($this->usuarioValido($request)){
-            $cliente = Cliente::where('usuario', $request->usuario)->first();
+        $usuario = $request->usuario;
+        $password = $request->password;
+        $cliente = DB::table('clientes')
+            ->where('usuario', $usuario)
+            ->where('password', $password)
+            ->first();
 
-            $jsonResponse = $this->success([
-                'cliente' => $cliente,
-                'token' => $cliente->createToken('Api token of '. $cliente->usuario)->plainTextToken
-            ], 'Cliente logueado correctamente', 200);
-        }else{
-            $jsonResponse = $this->error('', 'Usuario o contraseña incorrecta', 401);
+        if ($cliente) {
+            return response()->json([
+                'usuario' => $cliente->usuario,
+                'token' => $cliente->createToken('Api token of'. $cliente->usuario)->plainTextToken,
+                'message' => 'Autenticación exitosa']);
+        } else {
+            return response()->json([
+                'message' => 'Autenticación NO exitosa'], 401);
         }
-        return $jsonResponse;
     }
 
     private function usuarioValido(Request $request){
