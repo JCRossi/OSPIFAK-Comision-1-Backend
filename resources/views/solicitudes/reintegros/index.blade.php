@@ -61,15 +61,22 @@
                 </tr>
             </thead>
             <tbody>
-
-                @foreach ($reintegros as $reintegroActual)
-                    <tr class="reintegro-row" data-url="/solicitudes/reintegros/{{ $reintegroActual->id }}">
-                        <td>{{ $reintegroActual->cliente->dni }}</td>
-                        <td>{{ $reintegroActual->cliente->apellido }} {{ $reintegroActual->cliente->nombre }}</td>
-                        <td>{{ $reintegroActual->fecha_estudio_compra }}</td>
-                        <td>{{ $reintegroActual->estado }}</td>
-                    </tr>
-                @endforeach
+                @forelse ($reintegros as $reintegroActual)
+                <tr class="reintegro-row" data-url="/solicitudes/reintegros/{{ $reintegroActual->id }}">
+                    <td>{{ $reintegroActual->cliente->dni }}</td>
+                    <td>{{ $reintegroActual->cliente->apellido }} {{ $reintegroActual->cliente->nombre }}</td>
+                    <td>{{ $reintegroActual->fecha_estudio_compra }}</td>
+                    <td>{{ $reintegroActual->estado }}</td>
+                </tr>
+                @empty
+                <!-- Mostrar mensaje cuando no hay filas -->
+                <tr>
+                    <td colspan="4" class="text-center">
+                        No existen reintegros para los filtros ingresados, corríjalos o 
+                        <a href="/solicitudes/reintegros">toque aquí</a> para limpiar los filtros.
+                    </td>
+                </tr>
+            @endforelse
             </tbody>
         </table>
     </div>
