@@ -153,7 +153,10 @@ class ClientesController extends Controller
      */
     public function show(string $id)
     {
-        $cliente = Cliente::find($id);
+        $cliente = Cliente::leftJoin('plans', 'clientes.plan_id', '=', 'plans.id')
+        ->select('clientes.*', 'plans.nombre as plan_nombre')
+        ->find($id);
+
         $menores = Menor::where('cliente_id', $id)->get();
         return view('clientes/show', compact('cliente', 'menores'));
     }
