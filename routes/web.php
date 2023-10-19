@@ -1,13 +1,11 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SolicitudesController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\CoberturasController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\EmpleadosController;
-use App\Http\Controllers\ReintegrosController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\ClientesMenoresController;
 
@@ -45,9 +43,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('coberturas',CoberturasController::class);
     Route::resource('clientes',ClientesController::class);
     Route::resource('clientesMenores',ClientesMenoresController::class);
-    Route::get('solicitudes', [SolicitudesController::class, 'index']);
-    Route::resource('solicitudes/reintegros', ReintegrosController::class);
-    Route::patch('solicitudes/reintegros/{id}/{estado}', [ReintegrosController::class, 'update'])->name('reintegros/update');
 });
 
 require __DIR__.'/auth.php';

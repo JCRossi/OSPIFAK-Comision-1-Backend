@@ -17,8 +17,6 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             PlanSeeder::class,
             ClienteTableSeeder::class,
-            MedicosTableSeeder::class,
-            ReintegrosTableSeeder::class,
         ]);
     }
 }
