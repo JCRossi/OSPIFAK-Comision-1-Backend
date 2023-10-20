@@ -8,9 +8,12 @@ use App\Models\Cliente;
 use App\Models\Menor;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
+
 class AuthController extends Controller
 {
-    public function login(Request $request)
+   /* public function login(Request $request)
     {
         $usuario = $request->usuario;
         $password = $request->password;
@@ -31,14 +34,42 @@ class AuthController extends Controller
             return response()->json([
                 'message' => 'Autenticación NO exitosa'], 401);
         }
+    }*/
+
+
+    public function login(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'usuario' => ['required','string'],
+            'password' => ['required','string']
+        ]);
+
+        if ($validator->fails()){
+            return response()->json(['errors' => $validator->errors()],401);
+        }
+
+        if (!Auth::guard('clientes')->attempt($request->only(['usuario','password']))){
+            return response()->json(['error' => 'Invalid usuario or password'],401);
+        }  
+
+        $cliente = Cliente::where('usuario', $request->usuario)->first();
+        $cliente->setHidden(['created_at', 'updated_at']);
+        $token = $cliente->createToken('myapptoken')->plainTextToken;
+
+        return response()->json([
+            'cliente' => $cliente,
+            'token' => $token
+        ],200);
     }
 
+
+/*
     private function usuarioValido(Request $request){
         return Auth::guard('clientes')->attempt([
             "usuario" => $request->usuario,
             "password" => $request->password
         ]);
-    }
+    }*/
 
     public function datos(Request $request)
     {
