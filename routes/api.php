@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientesControllerAPI;
 use App\Http\Controllers\PlanesControllerAPI;
 
@@ -22,8 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-//Route::post('/login', [AuthController::class, 'login']);
-Route::get('/datos', [AuthController::class, 'datos']);
+Route::get('/datos', [ClientesControllerAPI::class, 'datos']);
 Route::post('/registrar', [ClientesControllerAPI::class, 'registrar']);
 Route::post('/login', [ClientesControllerAPI::class, 'login']);
 Route::get('/planes', [PlanesControllerAPI::class, 'index']);
