@@ -13,31 +13,41 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-   /* public function login(Request $request)
-    {
-        $usuario = $request->usuario;
-        $password = $request->password;
+    public function login(Request $request) {
+        try{
+            $jsonResponse = null;
+        
+            if($this->usuarioValido($request)) {
+                $usuario = Cliente::where('usuario', $request->usuario)->first();
+    
+                $jsonResponse = $this->success([
+                    'usuario' => $usuario,
+                    'token' => $usuario->createToken('Api token of '. $usuario->usuario)->plainTextToken
+                ], 'Cliente logueado correctamente', 200);
+            }
+            else {
+                $jsonResponse = $this->error('', 'DNI o contraseña incorrectos', 401);
+            }
 
-        $cliente = DB::table('clientes')
-            ->where('usuario', $usuario)
-            ->where('password', $password)
-            ->first();
+            return $jsonResponse;
+        } catch(ValidationException $e){
+            $errors = $e->validator->errors()->all();
 
-        if ($cliente) {
-            $token = $cliente->createToken('Api token of ' . $cliente->usuario)->accessToken; // Corregir la generación del token
-            return response()->json([
-                'usuario' => $cliente->usuario,
-                'token' => $token, // Utilizar el token generado correctamente
-                'message' => 'Autenticación exitosa'
-            ]);
-        } else {
-            return response()->json([
-                'message' => 'Autenticación NO exitosa'], 401);
+            return $jsonResponse = $this->error('', ['errors' => $errors], 422);
         }
-    }*/
+    }
+
+    private function usuarioValido($request) {
+        return Auth::guard('clientes')->attempt([
+            "usuario" => $request->usuario, 
+            "password" => $request->password
+        ]);
+    }
+
+    
 
 
-    public function login(Request $request)
+    /*public function login(Request $request)
     {
         $validator = Validator::make($request->all(),[
             'usuario' => ['required','string'],
@@ -60,16 +70,10 @@ class AuthController extends Controller
             'cliente' => $cliente,
             'token' => $token
         ],200);
-    }
-
-
-/*
-    private function usuarioValido(Request $request){
-        return Auth::guard('clientes')->attempt([
-            "usuario" => $request->usuario,
-            "password" => $request->password
-        ]);
     }*/
+
+
+
 
     public function datos(Request $request)
     {

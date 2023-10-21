@@ -5,9 +5,38 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class ClientesControllerAPI extends Controller
 {
+     public function login(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'usuario' => ['required','string'],
+            'password' => ['required','string']
+        ]);
+
+        if ($validator->fails()){
+            return response()->json(['errors' => $validator->errors()],401);
+        }
+
+       // if (!Auth::guard('clientes')->attempt($request->only(['usuario','password']))){
+         //   return response()->json(['error' => 'Invalid usuario or password'],401);
+       // }  
+
+        $cliente = Cliente::where('usuario', $request->usuario)->first();
+        $cliente->setHidden(['created_at', 'updated_at']);
+        $token = $cliente->createToken('myapptoken')->plainTextToken;
+
+        return response()->json([
+            'cliente' => $cliente,
+            'token' => $token
+        ],200);
+    }
+
+
 
     public function registrar(Request $request)
     {
