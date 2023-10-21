@@ -33,7 +33,7 @@ class ClientesControllerAPI extends Controller
         $token = $cliente->createToken('myapptoken')->plainTextToken;
 
         return response()->json([
-            'cliente' => $cliente,
+            'usuario' => $cliente,
             'token' => $token
         ],200);
     }
