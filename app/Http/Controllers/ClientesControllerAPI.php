@@ -37,7 +37,7 @@ class ClientesControllerAPI extends Controller
             'token' => $token
         ],200);
     }
-
+   
 
 
     public function registrar(Request $request)
@@ -110,7 +110,13 @@ class ClientesControllerAPI extends Controller
             $cliente -> forma_pago = $request -> forma_pago;  
             $cliente->save();
             $cliente->setHidden(['created_at', 'updated_at']);
-            return response()->json(['message' => 'El cliente fue creado con éxito'], 201);
+            
+            $token = $cliente->createToken('myapptoken')->plainTextToken;
+            return response()->json([
+                'message' => 'Cliente registrado con éxito',
+                'usuario' => $cliente,
+                'token' => $token,
+            ], 201);
     }
 
     public function datos(Request $request)
@@ -145,4 +151,51 @@ class ClientesControllerAPI extends Controller
         return response()->json($clienteInfo);
     }    
 
+
+    public function registrarMenor(Request $request)
+    {
+        $request->validate(
+            [
+                'nombre' => 'required|string|max:50',
+                'apellido' => 'required|string|max:50',
+                'fecha_nacimiento' => 'required|date',
+                'dni' => 'required|numeric|min:1|max:99999999|unique:cliente_menor,dni',
+            ],
+            [
+                'nombre.required' => 'El nombre no puede ser vacío',
+                'nombre.string' => 'El nombre no tiene el formato adecuado.',
+                'nombre.max' => 'El nombre ingresado es más extenso de lo permitido (50 caracteres).',
+
+                'apellido.required' => 'El apellido no puede ser vacío',
+                'apellido.string' => 'El apellido no tiene el formato adecuado.',
+                'apellido.max' => 'El apellido ingresado es más extenso de lo permitido (50 caracteres).',
+                
+                'fecha_nacimiento.required' => 'La fecha de nacimiento no puede ser vacía.',
+                'fecha_nacimiento.date' => 'La fecha de nacimiento no tiene el formato adecuado.',
+
+                'dni.required' => 'El DNI no puede ser vacío.',
+                'dni.numeric' => 'El DNI no tiene el formato adecuado.',
+                'dni.min' => 'El DNI ingresado tiene que ser mayor que 0.',
+                'dni.max' => 'El DNI ingresado es más extenso de lo permitido (8 dígitos).',
+                'dni.unique' => 'Ya existe un menor registrado con el email ingresado.',
+
+            ]
+        );
+
+        $clienteId = Cliente::max('id');
+
+        $menor = new Menor();
+
+        $menor->cliente_id = $clienteId;
+        $menor->nombre = $request -> get('nombre'); 
+        $menor->apellido = $request -> get('apellido'); 
+        $menor->fecha_nacimiento = $request -> get('fecha_nacimiento'); 
+        $menor->dni = $request -> get('dni');
+
+        $menor->save();
+        $menor->setHidden(['created_at', 'updated_at']);
+    
+        return redirect()->to('/clientesMenores')->with('success', 'Menor dado de alta con éxito');
+    }
+    
 }
