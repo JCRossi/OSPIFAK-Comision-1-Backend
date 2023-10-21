@@ -111,12 +111,7 @@ class ClientesControllerAPI extends Controller
             $cliente->save();
             $cliente->setHidden(['created_at', 'updated_at']);
             
-            $token = $cliente->createToken('myapptoken')->plainTextToken;
-            return response()->json([
-                'message' => 'Cliente registrado con éxito',
-                'usuario' => $cliente,
-                'token' => $token,
-            ], 201);
+            return response()->json(['message' => 'El cliente fue creado con éxito'], 201);
     }
 
     public function datos(Request $request)
@@ -195,7 +190,7 @@ class ClientesControllerAPI extends Controller
         $menor->save();
         $menor->setHidden(['created_at', 'updated_at']);
     
-        return redirect()->to('/clientesMenores')->with('success', 'Menor dado de alta con éxito');
+        return response()->json(['message' => 'El menor fue creado con éxito'], 201);
     }
-    
+
 }
