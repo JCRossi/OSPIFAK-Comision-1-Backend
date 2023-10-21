@@ -52,7 +52,7 @@ class ClientesControllerAPI extends Controller
                     'dni' => 'required|numeric|min:1|max:99999999|unique:clientes,dni',
                     'email' => 'required|email',
                     'direccion' => 'required|string|max:100',
-                    'telefono' => 'required|numeric',
+                    'telefono' => 'required|numeric|max:9999999999',
                 ],
                 [
                     'usuario.required' => 'El usuario no puede ser vacío',
@@ -87,6 +87,7 @@ class ClientesControllerAPI extends Controller
 
                     'telefono.required' => 'El telefono no puede ser vacío',
                     'telefono.numeric' => 'El telefono no tiene el formato adecuado.', 
+                    'telefono.max' => 'El telefono debe tener 10 digitos como maximo',
 
                  ]
             );
