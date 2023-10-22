@@ -30,4 +30,5 @@ Route::get('/planes', [PlanesControllerAPI::class, 'index']);
 Route::middleware(['auth:sanctum'])->group(function() {
     Route::get('/prestaciones', [ClienteControllerAPI::class, 'recuperarPrestaciones']);
     Route::post('/prestaciones/solicitudes', [ClienteControllerAPI::class, 'guardarPrestacion']);
+    Route::get('/menores', [ClienteControllerAPI::class, 'recuperarMenores']);
 });

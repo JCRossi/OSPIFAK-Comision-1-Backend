@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use App\Models\Prestacion;
+use App\Models\Menor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -139,6 +140,12 @@ class ClientesControllerAPI extends Controller
         $clienteId = $request->user()->id;
         $prestaciones = Prestacion::where('cliente_id', $clienteId)->get();
         return response()->json($prestaciones);
+    }
+
+    public function recuperarMenores(Request $request){
+        $clienteId = $request->user()->id;
+        $menores = Menor::where('cliente_id', $clienteId)->get();
+        return response()->json($menores);
     }
 
 }
