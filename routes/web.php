@@ -43,7 +43,11 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::resource('empleados',EmpleadosController::class);
     Route::resource('planes',PlanController::class);
+    Route::get('planes/edit/{id}', [PlanController::class, 'edit']);
+    Route::patch('planes/update', [PlanController::class, 'update']);
     Route::resource('coberturas',CoberturasController::class);
+    Route::get('coberturas/edit/{id}', [CoberturasController::class, 'edit']);
+    Route::patch('coberturas/update', [CoberturasController::class, 'update']);
     Route::resource('clientes',ClientesController::class);
     Route::resource('clientesMenores',ClientesMenoresController::class);
     Route::get('solicitudes', [SolicitudesController::class, 'index']);

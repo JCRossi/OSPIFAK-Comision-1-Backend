@@ -98,7 +98,7 @@ class CoberturasController extends Controller
             return redirect()->to('/planes')->with('success', 'Coberturas definidas correctamente');
     }
 
-    /**
+     /**
      * Display the specified resource.
      */
     public function show(string $id)
@@ -111,7 +111,8 @@ class CoberturasController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $cobertura = Cobertura::find($id);
+        return view('Coberturas/edit')->with('cobertura', $cobertura);
     }
 
     /**
@@ -119,7 +120,50 @@ class CoberturasController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $enumValues = [
+            'Consultas medicas',
+            'Consultas medicas domiciliarias',
+            'Consulta medica online',
+            'Internacion',
+            'Odontologia general',
+            'Ortodoncia',
+            'Protesis odontologicas',
+            'Implantes odontologicos',
+            'Kinesiologia',
+            'Psicologia',
+            'Medicamentos en farmacia',
+            'Medicamentos en internacion',
+            'Optica',
+            'Cirugias esteticas',
+            'Analisis clinicos',
+            'Analisis de diagnostico',
+        ];
+        
+        $porcentajes = $request->input('porcentaje');
+            $request->validate(
+                [
+                    'porcentaje.*' => 'required|integer|min:0|max:100',
+                ],
+                [           
+                    'porcentaje.*.required' => 'El porcentaje de la prestación no puede ser vacío.',
+                    'porcentaje.*.integer' => 'El porcentaje de la prestación no tiene el formato adecuado.',
+                    'porcentaje.*.min' => 'El porcentaje ingresado debe encontrarse entre 0 y 100.',
+                    'porcentaje.*.max' => 'El porcentaje ingresado debe encontrarse entre 0 y 100.',
+                ]
+            );
+
+            $planId = Plan::max('id');
+            
+            foreach ($enumValues as $index => $nombre_prestacion) {
+                $cobertura = Cobertura::find($id);
+                $cobertura->plan_id = $planId;
+                $cobertura->nombre_prestacion = $nombre_prestacion;
+                $cobertura->porcentaje = $porcentajes[$index];
+                $cobertura->save();
+                $cobertura->setHidden(['created_at', 'updated_at']);
+            }
+
+            return redirect()->to('/planes')->with('success', 'Coberturas definidas correctamente');
     }
 
     /**

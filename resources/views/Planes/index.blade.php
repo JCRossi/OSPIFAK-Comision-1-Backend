@@ -16,4 +16,27 @@
             </div>
         </a>
     </div>
+
+    <div class="table-responsive">
+        <table class="table" id="prestaciones-table">
+        @foreach ($planes as $planActual)
+            <tr class="planes-row" data-url="/planes/{{ $planActual->id }}">
+                <td>{{ $planActual->nombre }}</td>
+                <td>
+                        <form method="POST">
+                            <a href="/planes/edit/{{$planActual->id}}" class="btn btn-info">Editar</a>         
+                        </form>
+                </td>
+            </tr>
+        @endforeach
+        </table>
+    </div>
+
+    <style>
+        .planes-row {
+            cursor: pointer;
+        }
+    </style>
+
+
 @endsection
