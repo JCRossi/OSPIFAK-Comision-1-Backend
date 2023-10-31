@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             ClienteTableSeeder::class,
             MedicosTableSeeder::class,
             ReintegrosTableSeeder::class,
+            PrestacionesTableSeeder::class,
         ]);
     }
 }

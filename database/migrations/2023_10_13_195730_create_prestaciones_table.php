@@ -16,15 +16,16 @@ return new class extends Migration
             $table->foreignId('cliente_id')->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreignId('cliente_menor_id')->constrained()
+           /* $table->foreignId('cliente_menor_id')->constrained()
                 ->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table->string("nombre_medico");
+                ->onDelete('cascade');*/
+            $table->string("nombre_medico"); 
             $table->string("matricula_medico");
             $table->string("instituto");
             $table->date("fecha_turno");
             $table->date("fecha_solicitud");
-            $table->enum('estado', ['Pendiente, Aceptada, Rechazada']);
+           // $table->enum('estado', ['Pendiente, Aceptada, Rechazada']);
+           $table->string('estado');
             $table->enum('nombre_prestacion', ['Consultas medicas', 'Consultas medicas domiciliarias', 
                 'Consulta medica online', 'Internacion','Odontologia general', 'Ortodoncia', 
                 'Protesis odontologicas', 'Implantes odontologicos', 'Kinesiologia', 'Psicologia',
