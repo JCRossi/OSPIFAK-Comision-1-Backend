@@ -7,13 +7,15 @@ use App\Models\Cliente;
 use App\Models\Plan;
 use Illuminate\Validation\ValidationException;
 use App\Models\Menor;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ClientesController extends Controller
 {
-    function _construct(){
+    public function _construct(){
         $this->middleware('can:clientes.index')->only('index');
         $this->middleware('can:clientes.create')->only('create','store');
     }
+    
 
     /**
      * Display a listing of the resource.
@@ -184,4 +186,38 @@ class ClientesController extends Controller
     {
         //
     }
+
+    public function generarPago($id) 
+    {
+        $cliente = Cliente::leftJoin('plans', 'clientes.plan_id', '=', 'plans.id')
+            ->select('clientes.*', 'plans.nombre as plan_nombre', 'plans.precio_adultos', 'plans.precio_jovenes', 'plans.precio_adultos_jovenes', 'plans.precio_adultos_mayores')
+            ->find($id);
+
+        $menores = Menor::where('cliente_id', $id)->get();
+        
+        return view('clientes.pago', compact('cliente', 'menores'));
+    }
+
+    public function generarPdf($id) 
+    {
+        $cliente = Cliente::leftJoin('plans', 'clientes.plan_id', '=', 'plans.id')
+            ->select('clientes.*', 'plans.nombre as plan_nombre', 'plans.precio_adultos', 'plans.precio_jovenes', 'plans.precio_adultos_jovenes', 'plans.precio_adultos_mayores')
+            ->find($id);
+
+        $menores = Menor::where('cliente_id', $id)->get();
+
+        $edad = $this->calcularEdad($cliente->fecha_nacimiento);
+
+        $pdf = Pdf::loadView('clientes.pdf', compact('cliente', 'menores', 'edad'));
+
+        return $pdf->stream();
+        
+    }
+
+    private function calcularEdad($fechaNacimiento) {
+        $fechaActual = date('Y-m-d');
+        $edad = date_diff(date_create($fechaNacimiento), date_create($fechaActual));
+        return $edad->y;
+    }
+    
 }

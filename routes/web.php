@@ -8,6 +8,7 @@ use App\Http\Controllers\PlanController;
 use App\Http\Controllers\EmpleadosController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\ClientesMenoresController;
+use App\Http\Controllers\PDFController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('coberturas',CoberturasController::class);
     Route::resource('clientes',ClientesController::class);
     Route::resource('clientesMenores',ClientesMenoresController::class);
+    Route::get('/clientes/{id}/pago', [ClientesController::class, 'generarPago'])->name('pago');
+    Route::get('/clientes/{id}/pdf', [ClientesController::class, 'generarPdf'])->name('pdf');
 });
 
 require __DIR__.'/auth.php';

@@ -91,7 +91,7 @@
                 <p>No hay menores asociados a este cliente.</p>
             @endif
             <div class="form-group">
-                <button type="submit" name="action" value="menor" class="btn btn-outline-success">Generar cupón de pago</button>
+                <a href="{{ route('pago', ['id' => $cliente->id]) }}" class="btn btn-outline-success">Generar cupón de pago</a>
             </div>
 
             <div class="form-group float-end">
