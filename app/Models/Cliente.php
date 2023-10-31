@@ -28,4 +28,14 @@ class Cliente extends Authenticatable
     {
         return $this->hasMany(Menor::class, 'cliente_id');
     }
+
+    public function reintegros(): HasMany
+    {
+        return $this->hasMany(Reintegro::class);
+    }
+
+    public function prestaciones(): HasMany
+    {
+        return $this->hasMany(Prestacion::class);
+    }
 }

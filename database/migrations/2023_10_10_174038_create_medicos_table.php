@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('plans', function (Blueprint $table) {
+        Schema::create('medicos', function (Blueprint $table) {
             $table->id();
             $table->string("nombre");
-            
-            $table->float("precio_jovenes"); //-21
-            $table->float("precio_adultos_jovenes"); //21-35
-            $table->float("precio_adultos"); //35-55
-            $table->float("precio_adultos_mayores"); //+55
-
+            $table->string("apellido");
+            $table->integer("dni")->unique();
+            $table->string("matricula");
             $table->timestamps();
         });
     }
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('plans');
+        Schema::dropIfExists('medicos');
     }
 };
