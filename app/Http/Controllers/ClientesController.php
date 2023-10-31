@@ -198,17 +198,31 @@ class ClientesController extends Controller
         return view('clientes.pago', compact('cliente', 'menores'));
     }
 
-    public function generarPdf($id) 
+    public function generarPdf(Request $request, $id) 
     {
         $cliente = Cliente::leftJoin('plans', 'clientes.plan_id', '=', 'plans.id')
-            ->select('clientes.*', 'plans.nombre as plan_nombre', 'plans.precio_adultos', 'plans.precio_jovenes', 'plans.precio_adultos_jovenes', 'plans.precio_adultos_mayores')
-            ->find($id);
+        ->select('clientes.*', 'plans.nombre as plan_nombre', 'plans.precio_adultos', 'plans.precio_jovenes', 'plans.precio_adultos_jovenes', 'plans.precio_adultos_mayores')
+        ->find($id);
 
         $menores = Menor::where('cliente_id', $id)->get();
 
         $edad = $this->calcularEdad($cliente->fecha_nacimiento);
 
-        $pdf = Pdf::loadView('clientes.pdf', compact('cliente', 'menores', 'edad'));
+        // Obtén el período de pago seleccionado desde la solicitud
+        $periodo_pago = $request->input('periodo_pago');
+
+        $formaPago = $cliente->forma_pago; // Asegúrate de obtener la forma de pago de tu modelo
+        $factorMultiplicacion = 1; // Establece un valor predeterminado
+
+        if ($formaPago === 'Mensual') {
+            $factorMultiplicacion = 1;
+        } elseif ($formaPago === 'Trimestral') {
+            $factorMultiplicacion = 3; // Multiplicar por 3 para un trimestre
+        } elseif ($formaPago === 'Anual') {
+            $factorMultiplicacion = 12; // Multiplicar por 12 para un año
+        }
+
+        $pdf = Pdf::loadView('clientes.pdf', compact('cliente', 'menores', 'edad', 'periodo_pago', 'factorMultiplicacion'));
 
         return $pdf->stream();
         

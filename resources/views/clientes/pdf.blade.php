@@ -54,13 +54,13 @@
                                 @php
                                     $edad = $edad; // Utiliza la variable $edad pasada desde el controlador
                                     if ($edad >= 21 && $edad <= 35) {
-                                        echo 'Precio: $' . $cliente->precio_adultos_jovenes;
+                                        echo 'Precio por mes: $' . $cliente->precio_adultos_jovenes;
                                     } elseif ($edad >= 36 && $edad <= 55) {
-                                        echo 'Precio: $' . $cliente->precio_adultos;
+                                        echo 'Precio por mes: $' . $cliente->precio_adultos;
                                     } elseif ($edad >= 56) {
-                                        echo 'Precio: $' . $cliente->precio_adultos_mayores;
+                                        echo 'Precio por mes: $' . $cliente->precio_adultos_mayores;
                                     } else {
-                                        echo 'Precio: $' . $cliente->precio_jovenes;
+                                        echo 'Precio por mes: $' . $cliente->precio_jovenes;
                                     }
                                 @endphp
                             </td>
@@ -77,7 +77,7 @@
                                 <tr>
                                     <td>{{ $menor->dni }}</td>
                                     <td>{{ $menor->apellido }} {{ $menor->nombre }}</td>
-                                    <td>Precio: ${{$cliente->precio_jovenes}}</td>
+                                    <td>Precio por mes: ${{$cliente->precio_jovenes}}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -97,6 +97,10 @@
                             <span class="input-group-text">Forma de Pago:</span>
                             <span class="input-group-text" style="font-weight: bold;">{{ $cliente->forma_pago }}</span>
                         </div>
+                        <div class="input-group">
+                            <span class="input-group-text">Período de Pago:</span>
+                            <span class="input-group-text" style="font-weight: bold;">{{ $periodo_pago }}</span>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <div class="input-group">
@@ -113,7 +117,7 @@
                                     } else {
                                         $precioCliente = $cliente->precio_jovenes;
                                     }
-                                    $precioTotal = $precioCliente + count($menores) * $cliente->precio_jovenes;
+                                    $precioTotal = ($precioCliente + count($menores) * $cliente->precio_jovenes) * $factorMultiplicacion; // Multiplica por el factor de multiplicación
                                     echo '$' . $precioTotal;
                                 @endphp
                             </span>
