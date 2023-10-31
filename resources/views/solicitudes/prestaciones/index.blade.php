@@ -63,9 +63,9 @@
             <tbody>
                 @forelse ($prestaciones as $prestacionActual)
                 <tr class="prestacion-row" data-url="/solicitudes/prestaciones/{{ $prestacionActual->id }}">
-                    <td>{{ $prestacionActual->prestacionesPropias->dni }}</td>
-                    <td>{{ $prestacionActual->prestacionesPropias->apellido }} {{ $prestacionActual->prestacionesPropias->nombre }}</td>
-                    <td>{{ $prestacionActual->fecha_turno }}</td>
+                    <td>{{ $prestacionActual->cliente->dni }}</td>
+                    <td>{{ $prestacionActual->cliente->apellido }} {{ $prestacionActual->cliente->nombre }}</td>
+                    <td>{{ \Carbon\Carbon::parse($prestacionActual->fecha_turno)->format('d/m/Y') }}</td>
                     <td>{{ $prestacionActual->estado }}</td>
                 </tr>
                 @empty
@@ -87,7 +87,7 @@
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
+   
     
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -141,7 +141,7 @@
 
             $('#filterModal').on('hidden.bs.modal', function () {
                 // Aquí puedes realizar acciones después de cerrar el modal
-                // Por ejemplo, puedes llamar a una función para cargar los reintegros con los filtros aplicados
+                // Por ejemplo, puedes llamar a una función para cargar las prestaciones con los filtros aplicados
                 window.location.href = '/solicitudes/prestaciones?dni=' + dniFilter + '&desde=' + desdeFilter + '&estado=' + estadoFilter + '&hasta=' + hastaFilter;
             });
         });

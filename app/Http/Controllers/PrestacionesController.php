@@ -122,7 +122,7 @@ class PrestacionesController extends Controller
             abort(404);
         }
 
-        return view('solicitudes/prestaciones/show')->with('prestaciones', $prestacion);
+        return view('solicitudes/prestaciones/show')->with('prestacion', $prestacion);
     }
 
     /**

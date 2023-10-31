@@ -33,4 +33,9 @@ class Cliente extends Authenticatable
     {
         return $this->hasMany(Reintegro::class);
     }
+
+    public function prestaciones(): HasMany
+    {
+        return $this->hasMany(Prestacion::class);
+    }
 }

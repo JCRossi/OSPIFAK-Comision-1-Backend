@@ -15,15 +15,15 @@
     <div class="container">
         <div class="row">
            <div class="col-md-6">
-            <p class="mb-0 text-start text-muted">Fecha solicitud: {{ $prestacion->created_at }}</p>
-
-            <p class="mb-0 text-start text-muted">Apellido y nombre: {{ $prestacion->cliente->apellido }}, {{ $reintegro->cliente->nombre }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DNI: {{ $reintegro->cliente->dni }}</p>
+            <p class="mb-0 text-start text-muted">Fecha solicitud: {{ \Carbon\Carbon::parse($prestacion->fecha_solicitud)->format('d/m/Y') }}</p>
+            
+            <p class="mb-0 text-start text-muted">Apellido y nombre: {{ $prestacion->cliente->apellido }}, {{ $prestacion->cliente->nombre }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DNI: {{ $prestacion->cliente->dni }}</p>
 
             <p class="mb-0 text-start text-muted">Profesional solicitante: {{ $prestacion->nombre_medico }}  - Matrícula: {{ $prestacion->matricula_medico }}</p>
 
             <p class="mb-0 text-start text-muted">Instituto: {{ $prestacion->instituto }}</p>
 
-            <p class="mb-0 text-start text-muted">Fecha turno: {{ $prestacion->fecha_turno }}</p>
+            <p class="mb-0 text-start text-muted">Fecha turno: {{ \Carbon\Carbon::parse($prestacion->fecha_turno)->format('d/m/Y') }}</p>
             </div>
         </div>
 
