@@ -208,18 +208,17 @@ class ClientesController extends Controller
 
         $edad = $this->calcularEdad($cliente->fecha_nacimiento);
 
-        // Obtén el período de pago seleccionado desde la solicitud
         $periodo_pago = $request->input('periodo_pago');
 
-        $formaPago = $cliente->forma_pago; // Asegúrate de obtener la forma de pago de tu modelo
-        $factorMultiplicacion = 1; // Establece un valor predeterminado
+        $formaPago = $cliente->forma_pago; 
+        $factorMultiplicacion = 1;
 
         if ($formaPago === 'Mensual') {
             $factorMultiplicacion = 1;
-        } elseif ($formaPago === 'Trimestral') {
-            $factorMultiplicacion = 3; // Multiplicar por 3 para un trimestre
+        } elseif ($formaPago === 'Semestral') {
+            $factorMultiplicacion = 6; 
         } elseif ($formaPago === 'Anual') {
-            $factorMultiplicacion = 12; // Multiplicar por 12 para un año
+            $factorMultiplicacion = 12;
         }
 
         $pdf = Pdf::loadView('clientes.pdf', compact('cliente', 'menores', 'edad', 'periodo_pago', 'factorMultiplicacion'));
