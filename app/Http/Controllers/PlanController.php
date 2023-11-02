@@ -98,7 +98,7 @@ class PlanController extends Controller
 
             $request->validate(
                 [
-                    'nombre' => 'required|string|max:10|unique:plans,nombre',   
+                    'nombre' => 'required|string|max:10',   
                     'precio_jovenes' => 'required|integer|min:0|max:99999999',
                     'precio_adultos_jovenes' => 'required|integer|min:0|max:99999999',
                     'precio_adultos' => 'required|integer|min:0|max:99999999',
