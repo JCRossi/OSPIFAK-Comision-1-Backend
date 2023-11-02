@@ -21,7 +21,7 @@
         <table class="table" id="prestaciones-table">
         @foreach ($planes as $planActual)
             <tr class="planes-row" data-url="/planes/{{ $planActual->id }}">
-                <td>{{ $planActual->nombre }}</td>
+                <td style="text-align: left;">{{ $planActual->nombre }}</td>
                 <td>
                         <form method="POST">
                             <a href="/planes/edit/{{$planActual->id}}"  ><i class="fas fa-arrow-right"></i></a>         

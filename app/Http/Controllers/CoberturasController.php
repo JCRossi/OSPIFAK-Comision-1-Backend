@@ -212,29 +212,7 @@ class CoberturasController extends Controller
 
             return redirect()->to('/planes')->with('success', 'Coberturas modificadas correctamente');
     }
-    /*public function update(Request $request, string $id)
-{
-    $porcentajes = $request->input('porcentaje');
-    
-    $request->validate([
-        'porcentaje.*' => 'required|integer|min:0|max:100',
-    ], [
-        'porcentaje.*.required' => 'El porcentaje de la prestación no puede ser vacío.',
-        'porcentaje.*.integer' => 'El porcentaje de la prestación no tiene el formato adecuado.',
-        'porcentaje.*.min' => 'El porcentaje ingresado debe encontrarse entre 0 y 100.',
-        'porcentaje.*.max' => 'El porcentaje ingresado debe encontrarse entre 0 y 100.',
-    ]);
-
-    foreach ($porcentajes as $coberturaId => $porcentaje) {
-        $cobertura = Cobertura::find($coberturaId);
-        $cobertura->porcentaje = $porcentaje;
-        $cobertura->save();
-    }
-
-    return redirect()->to('/planes')->with('success', 'Coberturas modificadas correctamente');
-}*/
-
-    
+        
 
 
     /**
