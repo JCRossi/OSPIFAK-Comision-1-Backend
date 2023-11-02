@@ -148,4 +148,18 @@ class ClientesControllerAPI extends Controller
         return response()->json($menores);
     }
 
+     /**
+     * Soft delete the specified resource.
+     */
+    public function delete(string $usuario)
+    {
+        $cliente = Cliente::where('usuario', $usuario)->first();
+
+        if (!$cliente) {
+            return response()->json(['message' => 'Cliente no encontrado'], 404);
+        }
+
+        // $cliente->estado('bajaSolicitada');
+        return response()->json(['message' => 'Baja solicitada con éxito'], 200);
+    }
 }
