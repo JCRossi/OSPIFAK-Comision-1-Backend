@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Prestacion;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PrestacionesController extends Controller
 {
@@ -152,4 +153,16 @@ class PrestacionesController extends Controller
     {
         //
     }
+
+
+    public function generarPdf($id)
+    {
+        $prestacion = Prestacion::find($id);
+
+        $pdf = PDF::loadView('solicitudes/prestaciones/pdf', compact('prestacion')); // Asegúrate de tener una vista llamada 'solicitudes/prestaciones/pdf' que represente el contenido del PDF para las prestaciones.
+
+        return $pdf->stream();
+    }
+
+
 }

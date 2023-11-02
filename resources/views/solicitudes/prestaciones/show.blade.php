@@ -50,6 +50,8 @@
                 @csrf
                 @method('PATCH')
                 <button type="submit" class="btn btn-outline-success">Aprobar</button>
+                <a href="{{ route('prestaciones/pdf', ['id' => $prestacion->id]) }}">Aprobar</a>
+
             </form>
 
             <form action="{{ route('prestaciones/update', ['id' => $prestacion->id, 'estado' => 'Rechazada']) }}" method="POST" style="display: inline-block;">
