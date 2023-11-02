@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::resource('empleados',EmpleadosController::class);
     Route::resource('planes',PlanController::class);
+    Route::get('planes/{id}/delete', [PlanController::class, 'delete']);
     Route::resource('coberturas',CoberturasController::class);
     Route::resource('clientes',ClientesController::class);
     Route::resource('clientesMenores',ClientesMenoresController::class);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
 use Illuminate\Http\Request;
 use App\Models\Plan;
 use App\Models\Cobertura;
@@ -22,7 +23,9 @@ class PlanController extends Controller
      */
     public function index()
     {
-        return view("planes/index");
+        $planes = Plan::all();
+
+        return view('planes/index')->with('planes', $planes);
     }
 
     /**
@@ -114,6 +117,27 @@ class PlanController extends Controller
     public function update(Request $request, string $id)
     {
         //
+    }
+
+    /**
+     * Soft delete the specified resource.
+     */
+    public function delete(string $id)
+    {
+        $plan = Plan::find($id);
+
+        if (!$plan) {
+            return back()->with('error', 'Plan no encontrado.');
+        }
+
+        $clientesAsociados = Cliente::where('plan_id', $plan->id)->count();
+
+        if ($clientesAsociados > 0) {
+            return back()->with('error', 'No es posible dar de baja el plan, aún tiene afiliados asociados.');
+        }
+
+        // $plan->estado('inactivo');
+        return back()->with('success','Plan dado de baja con éxito.');
     }
 
     /**

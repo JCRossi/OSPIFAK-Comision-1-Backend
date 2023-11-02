@@ -2,10 +2,17 @@
 
 @section('section_content')
     @if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
     @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="container">
         <a href="{{ url('/planes/create') }}" class="d-flex justify-content-between align-items-center mb-3 text-decoration-none text-green-500">
             <div class="d-flex align-items-center">
@@ -15,5 +22,55 @@
                 <span style="color: #78d278;" class="text-xs">Nuevo Plan</span>
             </div>
         </a>
+        <hr/>
+        <style>
+            .table-sm th,
+            .table-sm td {
+                font-weight: normal !important;        
+            }
+        </style>
+        <div class="table-responsive">
+            <table class="table table-sm table-borderless align-middle"" >
+                <thead class="text-muted">
+                    <tr >
+                        <th></th>
+                        <th scope="col" class="text-muted">#</th>
+                        <th scope="col" class="text-muted">Nombre del Plan</th>
+                        <th scope="col" class="text-muted">Precio Jóvenes</th>
+                        <th scope="col" class="text-muted">Precio Adultos Jóvenes</th>
+                        <th scope="col" class="text-muted">Precio Adultos</th>
+                        <th scope="col" class="text-muted">Precio Adultos Mayores</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($planes as $plan)
+                        <tr>
+                            <td>
+                                <a href="{{ url("/planes/{$plan->id}/edit") }}" class="btn btn-outline-primary" style="display: inline-block;">Modificar</a>
+                                <button class="btn btn-outline-danger" onclick="confirmarDarDeBaja({{ $plan->id }})" style="display: inline-block;">Dar de Baja</button>
+                            </td>
+                            <td>{{ $plan->id }}</td>
+                            <td>{{ $plan->nombre }}</td>
+                            <td>{{ $plan->precio_jovenes }}</td>
+                            <td>{{ $plan->precio_adultos_jovenes }}</td>
+                            <td>{{ $plan->precio_adultos }}</td>
+                            <td>{{ $plan->precio_adultos_mayores }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
+
+    <script>
+        function confirmarDarDeBaja(planId) {
+            if (confirm('¿Estás seguro de dar de baja el plan seleccionado?')) {
+                darDeBaja(planId);
+            }
+        }
+
+        function darDeBaja(planId) {
+            window.location.href = `/planes/${planId}/delete`;
+        }
+    </script>
 @endsection
