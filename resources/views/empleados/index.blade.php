@@ -40,10 +40,13 @@
                         </td>
 
                         <td>
-                                <form method="POST">
-                                <a href="/empleados"><i class="fas fa-edit"></i></a>
-                                </form>
+                            <form method="GET" action="{{ route('empleados.edit', ['id' => $empleado->id]) }}">
+                                <button type="submit" style="border: none; background-color: transparent;">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </form>
                         </td>
+
                         <td>
                             <form method="POST" action="{{ route('empleados.destroy', ['id' => $empleado->id]) }}" onsubmit="return confirm('¿Desea eliminar a {{ $empleado->nombre }}?')">
                                 @csrf

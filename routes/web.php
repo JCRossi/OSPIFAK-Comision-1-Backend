@@ -42,7 +42,8 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::resource('empleados',EmpleadosController::class);
-   // Route::delete('/empleados/delete/{id}', [EmpleadosController:: class, 'delete'])->name('empleados.delete');
+    Route::get('/empleados/{id}/edit', [EmpleadosController:: class, 'edit'])->name('empleados.edit');
+    Route::put('/empleados/{id}', [EmpleadosController::class, 'update'])->name('empleados.update');
     Route::delete('/empleados/{id}', [EmpleadosController::class,'destroy'])->name('empleados.destroy');
     Route::resource('planes',PlanController::class);
     Route::get('planes/{id}/delete', [PlanController::class, 'delete']);
