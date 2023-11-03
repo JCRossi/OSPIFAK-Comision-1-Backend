@@ -19,8 +19,13 @@ class EmpleadosController extends Controller
      */
     public function index()
     {
-        return view('empleados/index');
+        // Obtén la lista de empleados desde la base de datos
+        $empleados = Empleado::all();
+
+        // Pasa la lista de empleados a la vista
+        return view('empleados.index', compact('empleados'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -98,6 +103,23 @@ class EmpleadosController extends Controller
         return redirect()->to('/empleados')->with('success', 'Empleado dado de alta correctamente');
     }
 
+   /**
+ * Remove the specified resource from storage.
+ */
+/*public function delete(string $id)
+{
+    $empleado = Empleado::find($id);
+
+    if (!$empleado) {
+        return back()->with('error', 'Empleado no encontrado.');
+    }
+
+  
+
+    return redirect()->to('/empleados')->with('success', 'Empleado dado de baja con éxito.');
+}*/
+
+
     /**
      * Display the specified resource.
      */
@@ -122,11 +144,21 @@ class EmpleadosController extends Controller
         //
     }
 
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $empleado = Empleado::find($id);
+
+        if (!$empleado) {
+            return back()->with('error', 'Empleado no encontrado.');
+        }
+
+        $empleado->delete(); // Elimina el registro de la base de datos
+
+        return redirect()->to('/empleados')->with('success', 'Empleado dado de baja con éxito.');
     }
+
 }

@@ -6,6 +6,7 @@
         {{ session('success') }}
     </div>
     @endif
+
     <div class="container">
         <a href="{{ url('/empleados/create') }}" class="d-flex justify-content-between align-items-center mb-3 text-decoration-none text-green-500">
             <div class="d-flex align-items-center">
@@ -15,5 +16,57 @@
                 <span style="color: #78d278;" class="text-xs">Nuevo empleado</span>
             </div>
         </a>
+
+        <table class="table table-striped mt-4">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th scope="col">DNI</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Fecha de Ingreso</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+            @if (isset($empleados))
+                @foreach($empleados as $empleado)
+                    <tr>
+                        <td>{{ $empleado->dni }}</td>
+                        <td>{{ $empleado->nombre }}</td>
+                        <td>{{ $empleado->apellido }}</td>
+                        <td>{{ $empleado->fecha_ingreso }}</td>
+                        <td>
+                            <!-- Agrega aquí los botones o enlaces necesarios para ver detalles del empleado, editar, etc. -->
+                        </td>
+
+                        <td>
+                                <form method="POST">
+                                <a href="/empleados"><i class="fas fa-edit"></i></a>
+                                </form>
+                        </td>
+                        <td>
+                            <form method="POST" action="{{ route('empleados.destroy', ['id' => $empleado->id]) }}" onsubmit="return confirm('¿Desea eliminar a {{ $empleado->nombre }}?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-trash"></i> 
+                                </button>
+                            </form>
+                        </td>
+
+
+
+
+                    </tr>
+
+                   
+                @endforeach
+            @else
+                <tr>
+                    <td colspan="5">No se encontraron empleados.</td>
+                </tr>
+            @endif
+            </tbody>
+        </table>
     </div>
 @endsection
