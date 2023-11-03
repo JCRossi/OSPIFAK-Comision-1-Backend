@@ -157,6 +157,10 @@ class EmpleadosController extends Controller
         $empleado->telefono = $request->input('telefono');
         $empleado->fecha_ingreso = $request->input('fecha_ingreso');
 
+        
+        $empleado -> usuario = $request->input('dni');
+        $empleado -> password =$request->input('dni');
+
         // Guarda los cambios en la base de datos
         $empleado->save();
 
