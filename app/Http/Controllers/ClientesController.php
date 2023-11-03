@@ -118,6 +118,15 @@ class ClientesController extends Controller
                  ]
             );
 
+            // Verificar la edad del titular
+            $fechaNacimientoTitular = $request->input('fecha_nacimiento');
+            $hoy = now();
+            $edadTitular = $hoy->diffInYears($fechaNacimientoTitular);
+
+            if ($edadTitular < 18) {
+                return back()->withErrors(['fecha_nacimiento' => 'El titular debe ser mayor de 18 años']);
+            }
+
             $cliente = new Cliente();
 
             /*$cliente -> usuario = $request -> get('usuario'); 
@@ -136,6 +145,19 @@ class ClientesController extends Controller
 
             $cliente->save();
             $cliente->setHidden(['created_at', 'updated_at']);
+
+            // Verificar la edad de los menores a cargo
+            if ($request->has('menores')) {
+                foreach ($request->input('menores') as $menorData) {
+                    $fechaNacimientoMenor = $menorData['fecha_nacimiento'];
+                    $edadMenor = $hoy->diffInYears($fechaNacimientoMenor);
+                    if ($edadMenor >= 18) {
+                        return back()->withErrors(['menores' => 'Los menores a cargo deben ser menores de 18 años']);
+                    }
+                }
+            }
+
+            
             
             /*return redirect()->to('/clientes')->with('success', 'Cliente dado de alta correctamente');*/
 

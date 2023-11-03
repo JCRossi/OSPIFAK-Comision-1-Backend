@@ -63,6 +63,14 @@ class ClientesMenoresController extends Controller
 
         $clienteId = Cliente::max('id');
 
+        $fechaNacimientoMenor = $request->input('fecha_nacimiento');
+        $hoy = now();
+        $edadMenor = $hoy->diffInYears($fechaNacimientoMenor);
+
+        if ($edadMenor >= 18) {
+            return back()->withErrors(['fecha_nacimiento' => 'El menor a cargo debe ser menor de 18 años']);
+        }
+
         $menor = new Menor();
 
         $menor->cliente_id = $clienteId;
