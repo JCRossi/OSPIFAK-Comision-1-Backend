@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientesControllerAPI;
 use App\Http\Controllers\PlanesControllerAPI;
 
@@ -22,13 +21,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::post('/login', [AuthController::class, 'login']);
-Route::get('/datos', [AuthController::class, 'datos']);
+Route::get('/datos', [ClientesControllerAPI::class, 'datos']);
 Route::post('/registrar', [ClientesControllerAPI::class, 'registrar']);
-Route::get('/planes', [PlanesControllerAPI::class, 'index']);
+//Route::get('/planes', [PlanesControllerAPI::class, 'index']);
 
 Route::middleware(['auth:sanctum'])->group(function() {
     Route::get('/prestaciones', [ClienteControllerAPI::class, 'recuperarPrestaciones']);
     Route::post('/prestaciones/solicitudes', [ClienteControllerAPI::class, 'guardarPrestacion']);
     Route::get('/menores', [ClienteControllerAPI::class, 'recuperarMenores']);
 });
+Route::post('/registrarMenor', [ClientesControllerAPI::class, 'registrarMenor']);
+Route::post('/login', [ClientesControllerAPI::class, 'login']);
+Route::get('/planes', [PlanesControllerAPI::class, 'index']);
