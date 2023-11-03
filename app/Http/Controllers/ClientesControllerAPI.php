@@ -99,6 +99,15 @@ class ClientesControllerAPI extends Controller
                 return response()->json(['error' => 'El cliente con DNI ' . $request -> dni . ' ya existe.'], 404);
             }
 
+             // Verificar la edad del titular
+             $fechaNacimientoTitular = $request->input('fecha_nacimiento');
+             $hoy = now();
+             $edadTitular = $hoy->diffInYears($fechaNacimientoTitular);
+ 
+             if ($edadTitular < 18) {
+                 return back()->withErrors(['fecha_nacimiento' => 'El titular debe ser mayor de 18 años']);
+             }
+
             $cliente = new Cliente();
             $cliente -> usuario = $request -> get('usuario'); 
             $cliente -> password = $request -> get('password'); 
@@ -113,6 +122,17 @@ class ClientesControllerAPI extends Controller
             $cliente -> forma_pago = $request -> get('forma_pago'); 
             $cliente->save();
             $cliente->setHidden(['created_at', 'updated_at']);
+
+            // Verificar la edad de los menores a cargo
+            if ($request->has('menores')) {
+                foreach ($request->input('menores') as $menorData) {
+                    $fechaNacimientoMenor = $menorData['fecha_nacimiento'];
+                    $edadMenor = $hoy->diffInYears($fechaNacimientoMenor);
+                    if ($edadMenor >= 18) {
+                        return back()->withErrors(['menores' => 'Los menores a cargo deben ser menores de 18 años']);
+                    }
+                }
+            }
             
             return response()->json(['message' => 'El cliente fue creado con éxito'], 201);
     }
@@ -245,6 +265,14 @@ class ClientesControllerAPI extends Controller
         );
 
         $clienteId = Cliente::max('id');
+
+        $fechaNacimientoMenor = $request->input('fecha_nacimiento');
+        $hoy = now();
+        $edadMenor = $hoy->diffInYears($fechaNacimientoMenor);
+
+        if ($edadMenor >= 18) {
+            return back()->withErrors(['fecha_nacimiento' => 'El menor a cargo debe ser menor de 18 años']);
+        }
 
         $menor = new Menor();
 
