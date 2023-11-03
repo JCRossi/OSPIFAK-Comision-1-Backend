@@ -185,7 +185,7 @@ class CoberturasController extends Controller
             'Analisis clinicos',
             'Analisis de diagnostico',
         ];
-        
+        $coberturas = Cobertura::where('plan_id',$id)->get();
         $porcentajes = $request->input('porcentaje');
             $request->validate(
                 [
@@ -198,20 +198,16 @@ class CoberturasController extends Controller
                     'porcentaje.*.max' => 'El porcentaje ingresado debe encontrarse entre 0 y 100.',
                 ]
             );
-
-            $planId = Plan::max('id');
             
             foreach ($enumValues as $index => $nombre_prestacion) {
-                $cobertura = Cobertura::find($id);
-                $cobertura->plan_id = $planId;
-                $cobertura->nombre_prestacion = $nombre_prestacion;
-                $cobertura->porcentaje = $porcentajes[$index];
-                $cobertura->save();
-                $cobertura->setHidden(['created_at', 'updated_at']);
+                $coberturas[$index]->porcentaje = $porcentajes[$index];
+                $coberturas[$index]->save();
+                $coberturas[$index]->setHidden(['created_at', 'updated_at']);
             }
 
             return redirect()->to('/planes')->with('success', 'Coberturas modificadas correctamente');
     }
+
         
 
 

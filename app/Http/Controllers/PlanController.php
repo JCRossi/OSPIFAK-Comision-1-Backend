@@ -132,18 +132,20 @@ class PlanController extends Controller
                 ]
             );
             $plan = Plan::find($id);
-            $plan->nombre = $request->nombre;
-            $plan->precio_jovenes = $request->precio_jovenes;
-            $plan->precio_adultos_jovenes = $request->precio_adultos_jovenes;
-            $plan->precio_adultos = $request->precio_adultos;
-            $plan->precio_adultos_mayores = $request->precio_adultos_mayores;
+            $plan->nombre = $request->get('nombre');
+            $plan->precio_jovenes = $request->get('precio_jovenes');
+            $plan->precio_adultos_jovenes = $request->get('precio_adultos_jovenes');
+            $plan->precio_adultos = $request->get('precio_adultos');
+            $plan->precio_adultos_mayores = $request->get('precio_adultos_mayores');
 
             $plan->save();
             
             $plan->setHidden(['created_at', 'updated_at']);
 
-            return redirect()->to('/coberturas/edit')->with('success', 'Plan modificado correctamente');
-    }
+            //return redirect()->to('/coberturas/edit/{{$plan->id}}')->with('success', 'Plan modificado correctamente');
+            return redirect('/coberturas/edit/' . $plan->id)->with('success', 'Plan modificado correctamente');
+
+        }
 
     /**
      * Display the specified resource.
