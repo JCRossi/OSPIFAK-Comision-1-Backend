@@ -65,8 +65,7 @@
 
                             <div class="form-group float-end">
                                         <a href="/planes" class="btn btn-outline-primary">Cancelar</a>
-                                        <a href="/coberturas/edit/{{$plan->id}}" class="btn btn-outline-success">Editar Coberturas</a>
-                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                        <button type="submit" class="btn btn-primary">Editar Coberturas</button>
 
                             </div>
                     </div>

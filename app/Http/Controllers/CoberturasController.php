@@ -133,7 +133,7 @@ class CoberturasController extends Controller
         //return view('Coberturas/edit')->with('cobertura', $cobertura);
         return view('Coberturas/edit', compact('enumValues', 'cobertura'));
     }*/
-    public function edit(string $id)
+ public function edit(string $id)
 {
     $enumValues = [
         'Consultas medicas',
@@ -160,6 +160,35 @@ class CoberturasController extends Controller
     return view('coberturas/edit', compact('enumValues', 'coberturas', 'planId'));
 
 }
+/*public function edit(string $id)
+{
+    $enumValues = [
+        'Consultas medicas',
+        'Consultas medicas domiciliarias',
+        'Consulta medica online',
+        'Internacion',
+        'Odontologia general',
+        'Ortodoncia',
+        'Protesis odontologicas',
+        'Implantes odontologicos',
+        'Kinesiologia',
+        'Psicologia',
+        'Medicamentos en farmacia',
+        'Medicamentos en internacion',
+        'Optica',
+        'Cirugias esteticas',
+        'Analisis clinicos',
+        'Analisis de diagnostico',
+    ];
+
+    $planId = $id; // Obtén el ID del plan que deseas editar.
+
+    // Obtén las coberturas y organízalas por el nombre de la prestación
+    $coberturas = Cobertura::where('plan_id', $planId)->get()->keyBy('nombre_prestacion');
+
+    return view('coberturas/edit', compact('enumValues', 'coberturas', 'planId'));
+}
+*/
 
 
     /**

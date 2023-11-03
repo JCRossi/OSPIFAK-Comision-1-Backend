@@ -22,7 +22,7 @@
                              <tr>
                                <td>{{ $prestacion }}</td>
                                 <td>
-                                    <input id="porcentaje[{{ $index }}]" type="number" name="porcentaje[{{ $index }}]" value="{{ old('porcentaje.' . $index, $coberturas[$index]->porcentaje ) }}" class="form-control">
+                                    <input id="porcentaje[{{ $index }}]" type="number" name="porcentaje[{{ $index }}]" value="{{ $coberturas[$index]->porcentaje  }}" class="form-control">
                                     @error('porcentaje.' . $index)
                                     <span class="text-danger">
                                         <strong>{{ $message }}</strong>
