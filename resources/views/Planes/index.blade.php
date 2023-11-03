@@ -24,7 +24,7 @@
                 <td style="text-align: left;">{{ $planActual->nombre }}</td>
                 <td>
                         <form method="POST">
-                            <a href="/planes/edit/{{$planActual->id}}"  ><i class="fas fa-arrow-right"></i></a>         
+                        <a href="/planes/edit/{{ $planActual->id }}"><i class="fas fa-edit"></i></a>
                         </form>
                 </td>
             </tr>
