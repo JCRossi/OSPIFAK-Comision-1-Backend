@@ -70,6 +70,7 @@ class ClientesMenoresController extends Controller
         $menor->apellido = $request -> get('apellido'); 
         $menor->fecha_nacimiento = $request -> get('fecha_nacimiento'); 
         $menor->dni = $request -> get('dni');
+        $menor->estado = 'Activo';
 
         $menor->save();
         $menor->setHidden(['created_at', 'updated_at']);

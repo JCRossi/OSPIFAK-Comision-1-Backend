@@ -155,8 +155,7 @@ class ClientesControllerAPI extends Controller
             return response()->json(['message' => 'Cliente no encontrado'], 405);
         }
 
-        $menores = Menor::where('cliente_id', $cliente->id)->get();
-
+        $menores = Menor::where('cliente_id', $cliente->id)->where('estado', 'Activo')->get();
 
         $titularYMenoresACargo = [
             'cliente' => $cliente,
@@ -169,15 +168,28 @@ class ClientesControllerAPI extends Controller
      /**
      * Soft delete the specified resource.
      */
-    public function delete(string $usuario)
+    public function delete(Request $request)
     {
-        $cliente = Cliente::where('usuario', $usuario)->first();
+        $clienteUsuario = $request->get('cliente_usuario');
+        $cliente = Cliente::where('usuario', $clienteUsuario)->first();
+        if (!$cliente){
+            $cliente = Menor::where('nombre', $clienteUsuario)->first();
+            if (!$cliente){
+                return response()->json(['error' => 'Cliente no encontrado'], 404);
+            }
+        }
+        else {
+            $menores = Menor::where('cliente_id', $cliente->id)->get();
 
-        if (!$cliente) {
-            return response()->json(['message' => 'Cliente no encontrado'], 404);
+            foreach ($menores as $menor) {
+                $menor->estado = 'Inactivo';
+                $menor->save();
+            }
         }
 
-        $cliente->estado('Inactivo');
+        $cliente->estado = 'Inactivo';
+        $cliente->save();
+
         return response()->json(['message' => 'Baja solicitada con éxito'], 200);
     }
 }
