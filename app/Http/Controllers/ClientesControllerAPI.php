@@ -148,6 +148,24 @@ class ClientesControllerAPI extends Controller
         return response()->json($menores);
     }
 
+    public function getTitularYMenoresACargo(string $usuario){
+        $cliente = Cliente::where('usuario', $usuario)->first();
+
+        if (!$cliente) {
+            return response()->json(['message' => 'Cliente no encontrado'], 405);
+        }
+
+        $menores = Menor::where('cliente_id', $cliente->id)->get();
+
+
+        $titularYMenoresACargo = [
+            'cliente' => $cliente,
+            'menores' => $menores,
+        ];
+    
+        return response()->json($titularYMenoresACargo);
+    }
+
      /**
      * Soft delete the specified resource.
      */
@@ -159,7 +177,7 @@ class ClientesControllerAPI extends Controller
             return response()->json(['message' => 'Cliente no encontrado'], 404);
         }
 
-        // $cliente->estado('bajaSolicitada');
+        $cliente->estado('Inactivo');
         return response()->json(['message' => 'Baja solicitada con éxito'], 200);
     }
 }

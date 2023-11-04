@@ -28,33 +28,22 @@
             .table-sm td {
                 font-weight: normal !important;        
             }
+
+            .btn-borderless {
+                border: none;
+                background: none;
+            }
         </style>
         <div class="table-responsive">
-            <table class="table table-sm table-borderless align-middle"" >
-                <thead class="text-muted">
-                    <tr >
-                        <th></th>
-                        <th scope="col" class="text-muted">#</th>
-                        <th scope="col" class="text-muted">Nombre del Plan</th>
-                        <th scope="col" class="text-muted">Precio Jóvenes</th>
-                        <th scope="col" class="text-muted">Precio Adultos Jóvenes</th>
-                        <th scope="col" class="text-muted">Precio Adultos</th>
-                        <th scope="col" class="text-muted">Precio Adultos Mayores</th>
-                    </tr>
-                </thead>
+            <table class="table table-sm table-borderless">
                 <tbody>
                     @foreach ($planes as $plan)
                         <tr>
-                            <td>
-                                <a href="{{ url("/planes/{$plan->id}/edit") }}" class="btn btn-outline-primary" style="display: inline-block;">Modificar</a>
-                                <button class="btn btn-outline-danger" onclick="confirmarDarDeBaja({{ $plan->id }})" style="display: inline-block;">Dar de Baja</button>
+                            <td style="width:120px;" class="text-left">
+                                <a href="{{ url("/planes/{$plan->id}/edit") }}" class="btn btn-outline-primary btn-borderless" style="display: inline-block;"><i class="fas fa-pencil-alt"></i></a>
+                                <button class="btn btn-outline-danger btn-borderless" onclick="confirmarDarDeBaja({{ $plan->id }})" style="display: inline-block;"><i class="fas fa-trash-alt"></i></button>
                             </td>
-                            <td>{{ $plan->id }}</td>
-                            <td>{{ $plan->nombre }}</td>
-                            <td>{{ $plan->precio_jovenes }}</td>
-                            <td>{{ $plan->precio_adultos_jovenes }}</td>
-                            <td>{{ $plan->precio_adultos }}</td>
-                            <td>{{ $plan->precio_adultos_mayores }}</td>
+                            <td onclick="window.location.href='{{ url("/planes/{$plan->id}/edit") }}';" style="cursor: pointer;">{{ $plan->nombre }}</td>
                         </tr>
                     @endforeach
                 </tbody>

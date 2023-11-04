@@ -22,6 +22,7 @@ class Cliente extends Authenticatable
         'email',
         'usuario',
         'password',
+        'estado',
     ];
 
     public function menores(): HasMany

@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
             $table->string("nombre");
-            
+            $table->enum('estado', ['Activo', 'Inactivo']);
+
             $table->float("precio_jovenes"); //-21
             $table->float("precio_adultos_jovenes"); //21-35
             $table->float("precio_adultos"); //35-55

@@ -38,3 +38,4 @@ Route::middleware(['auth:sanctum'])->group(function() {
 Route::get('/reintegros/{clienteUsuario}',[ReintegrosControllerAPI::class,'getReintegrosByClient']);
 Route::post('/reintegros',[ReintegrosControllerAPI::class,'store']);
 Route::get('/clientes/{usuario}/delete', [ClientesControllerAPI::class, 'delete']);
+Route::get('/clientes/{usuario}/titularYMenoresACargo', [ClientesControllerAPI::class, 'getTitularYMenoresACargo']);

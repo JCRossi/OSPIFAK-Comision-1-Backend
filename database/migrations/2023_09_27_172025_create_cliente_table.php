@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer("dni")->unique();
             $table->string("email");
             $table->string("direccion");
+            $table->enum('estado', ['Activo', 'Inactivo']);
             $table->integer("telefono");
             $table->foreignId('plan_id')->constrained()
                   ->onUpdate('cascade')

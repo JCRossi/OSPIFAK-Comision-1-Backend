@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('cliente_id')->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+                $table->enum('estado', ['Activo', 'Inactivo']);
             $table->timestamps();
         });
     }

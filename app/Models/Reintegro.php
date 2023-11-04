@@ -9,12 +9,11 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Reintegro extends Model
 {
-    protected $fillable = ['cliente_id','medico_id','nombre_instituto','fecha_estudio_compra','cbu','orden_medica','factura','tipo_reintegro', 'estado'];
+    protected $fillable = ['cliente_id','medico_id','nombre_instituto','fecha_estudio_compra','cbu','orden_medica','factura','tipo_reintegro', 'estado', 'comentarios'];
     protected $guarded = ['id'];
 
     use HasApiTokens;
     use HasFactory;
-
     public function cliente(): BelongsTo {
         return $this->belongsTo(Cliente::class);
     }

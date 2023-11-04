@@ -24,6 +24,7 @@ class ClienteTableSeeder extends Seeder
             'telefono' => '1234567890', // Cambia esto al valor deseado
             'plan_id' => 1, // Cambia esto al valor deseado
             'forma_pago' => 'Mensual', // Puedes cambiar esto a 'anual' o 'semestral' según necesites
+            'estado' => 'Activo',
             'created_at' => now(),
             'updated_at' => now(),
         ];

@@ -59,7 +59,7 @@ class ClientesController extends Controller
      */
     public function create()
     {
-        $planes = Plan::all();
+        $planes = Plan::where('estado', 'Activo')->get();
         return view("clientes/create")->with('planes', $planes);
     }
 
@@ -133,6 +133,7 @@ class ClientesController extends Controller
             $cliente -> telefono = $request -> get('telefono'); 
             $cliente -> plan_id = $request -> get('plan_id');
             $cliente -> forma_pago = $request -> get('forma_pago'); 
+            $cliente -> estado = 'Activo';
 
             $cliente->save();
             $cliente->setHidden(['created_at', 'updated_at']);

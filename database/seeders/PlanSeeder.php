@@ -14,6 +14,7 @@ class PlanSeeder extends Seeder
     {
         $datos = [
             'nombre' => 'Plan ORO',
+            'estado' => 'Activo',
             'precio_jovenes' => 10.0,
             'precio_adultos_jovenes' => 15.0,
             'precio_adultos' => 20.0,

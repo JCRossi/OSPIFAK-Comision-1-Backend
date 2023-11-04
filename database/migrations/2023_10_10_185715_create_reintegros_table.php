@@ -29,13 +29,15 @@ return new class extends Migration
 
             $table->string("cbu");
 
-            $table->string('orden_medica');
+            $table->string('orden_medica')->nullable();
 
             $table->string('factura');
             
             $table->enum('tipo_reintegro', ['insumo', 'estudio']);
 
             $table->string('estado');
+
+            $table->string('comentarios')->nullable();
 
             $table->timestamps();
         });

@@ -23,7 +23,7 @@ class PlanController extends Controller
      */
     public function index()
     {
-        $planes = Plan::all();
+        $planes = Plan::where('estado', 'Activo')->get();
 
         return view('planes/index')->with('planes', $planes);
     }
@@ -85,6 +85,7 @@ class PlanController extends Controller
             $plan->precio_adultos_jovenes = $request->precio_adultos_jovenes;
             $plan->precio_adultos = $request->precio_adultos;
             $plan->precio_adultos_mayores = $request->precio_adultos_mayores;
+            $plan->estado = 'Activo';
 
             $plan->save();
 
@@ -136,7 +137,8 @@ class PlanController extends Controller
             return back()->with('error', 'No es posible dar de baja el plan, aún tiene afiliados asociados.');
         }
 
-        // $plan->estado('inactivo');
+        $plan->estado = 'Inactivo';
+        $plan->save();
         return back()->with('success','Plan dado de baja con éxito.');
     }
 

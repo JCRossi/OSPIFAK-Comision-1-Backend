@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             PlanSeeder::class,
             ClienteTableSeeder::class,
             MedicosTableSeeder::class,
+            MenorTableSeeder::class,
             ReintegrosTableSeeder::class,
             PrestacionesTableSeeder::class,
         ]);

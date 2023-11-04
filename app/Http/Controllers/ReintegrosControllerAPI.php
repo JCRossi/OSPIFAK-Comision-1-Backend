@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use App\Models\Medico;
+use App\Models\Menor;
 use Illuminate\Http\Request;
 use App\Models\Reintegro;
 
@@ -18,7 +19,35 @@ class ReintegrosControllerAPI extends Controller
             //$clienteId = $request->user('clientes')->id;
             //$reintegrosCliente = Reintegro::where('cliente_id', $clienteId)->get();
             $reintegrosCliente = Reintegro::join('clientes', 'reintegros.cliente_id', '=', 'clientes.id')
-            ->where('clientes.usuario', $clienteUsuario)->get();
+    ->where('clientes.usuario', $clienteUsuario)
+    ->select(
+        'reintegros.id',
+        'reintegros.cliente_id',
+        'reintegros.medico_id',
+        'reintegros.nombre_instituto',
+        'reintegros.fecha_estudio_compra',
+        'reintegros.cbu',
+        'reintegros.orden_medica',
+        'reintegros.factura',
+        'reintegros.tipo_reintegro',
+        'reintegros.estado',
+        'reintegros.comentarios',
+        'reintegros.created_at',
+        'reintegros.updated_at',
+        'clientes.usuario',
+        'clientes.password',
+        'clientes.nombre',
+        'clientes.apellido',
+        'clientes.fecha_nacimiento',
+        'clientes.dni',
+        'clientes.email',
+        'clientes.direccion',
+        'clientes.telefono',
+        'clientes.plan_id',
+        'clientes.forma_pago',
+        'clientes.estado as cliente_estado' // Alias para la columna 'estado' de la tabla 'clientes'
+    )
+    ->get();
 
             return $this->responseOrError($reintegrosCliente, 'Reintegros no encontrados para ese cliente.');
         }
@@ -46,9 +75,9 @@ class ReintegrosControllerAPI extends Controller
                 'fecha_estudio_compra' => 'required|date',
                 'matricula' => 'required|string|max:50',
                 'cbu' => 'required|string|max:100',
-                'orden_medica' => 'required|file|mimes:pdf',
-                //'factura' =>  'required|file|mimes:pdf',
-                //'tipo_reintegro' => 'required',
+                'factura' => 'required|file|mimes:pdf',
+                'orden_medica' =>  'file|mimes:pdf',
+                'tipo_reintegro' => 'required',
             ], 
             [
                 'cliente_usuario.required' => 'El usuario del cliente no puede ser vacío',
@@ -74,7 +103,10 @@ class ReintegrosControllerAPI extends Controller
                 'cbu.string' => 'El CBU no tiene el formato adecuado.',
                 'cbu.max' => 'El cbu ingresado es más extenso de lo permitido (100 caracteres).',
 
-                'orden_medica.required' => 'La orden medica no puede ser vacia.',
+                'factura.required' => 'La factura no puede ser vacia.',
+                'factura.file' => 'La factura debe ser un archivo.',
+                'factura.mimes' => 'El formato de la factura no es pdf.',
+
                 'orden_medica.file' => 'La orden medica debe ser un archivo.',
                 'orden_medica.mimes' => 'El formato de la orden medica no es pdf.',
             ]
@@ -86,7 +118,13 @@ class ReintegrosControllerAPI extends Controller
             $clienteId = $cliente->id;
         }
         else {
-            return response()->json(['error' => 'Cliente no encontrado'], 404);
+            $cliente = Menor::where('nombre', $clienteUsuario)->first();
+            if ($cliente){
+                $clienteId = $cliente->id;
+            }
+            else {
+                return response()->json(['error' => 'Cliente no encontrado'], 404);
+            }
         }
         
         $medicoNombre = $request->get('medico_nombre');
@@ -105,14 +143,23 @@ class ReintegrosControllerAPI extends Controller
         $reintegro->medico_id = $medicoId;
         $reintegro->nombre_instituto = $request->get('nombre_instituto');
         $reintegro->fecha_estudio_compra = $request->get('fecha_estudio_compra');
+        $reintegro->tipo_reintegro = $request->get('tipo_reintegro');
         $reintegro->cbu = $request->get('cbu');
-
-        $ordenMedicaPath = $request->file('orden_medica')->store('ordenes_medicas', 'public');
-        $reintegro->orden_medica = $ordenMedicaPath;
-
-        $reintegro->factura = $ordenMedicaPath; // falta la factura
         $reintegro->estado = 'Pendiente';
-        $reintegro->tipo_reintegro = 'insumo';
+        
+
+        $facturaPath = $request->file('factura')->store('facturas', 'public');
+        $reintegro->factura = $facturaPath;
+
+        if ($request->has('orden_medica')){
+            $orden_medicaPath = $request->file('orden_medica')->store('ordenes_medicas', 'public');
+            $reintegro->orden_medica = $orden_medicaPath;
+        }
+
+
+        if ($request->has('comentarios')){
+            $reintegro->comentarios = $request->get('comentarios');
+        }
 
         $reintegro->save();
             
