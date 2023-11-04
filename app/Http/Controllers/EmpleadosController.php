@@ -19,8 +19,13 @@ class EmpleadosController extends Controller
      */
     public function index()
     {
-        return view('empleados/index');
+        // Obtén la lista de empleados desde la base de datos
+        $empleados = Empleado::all();
+
+        // Pasa la lista de empleados a la vista
+        return view('empleados.index', compact('empleados'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -98,6 +103,7 @@ class EmpleadosController extends Controller
         return redirect()->to('/empleados')->with('success', 'Empleado dado de alta correctamente');
     }
 
+  
     /**
      * Display the specified resource.
      */
@@ -106,27 +112,77 @@ class EmpleadosController extends Controller
         //
     }
 
-    /**
+   /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
+        $empleados = Empleado::find($id);
+        return view('empleados/edit')->with('empleados', $empleados);
     }
+  
 
-    /**
+
+   /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Busca el empleado que se va a editar
+        $empleado = Empleado::find($id);
+
+        if (!$empleado) {
+            return back()->with('error', 'Empleado no encontrado.');
+        }
+
+        // Valida los datos enviados en el formulario de edición
+        $request->validate([
+            'nombre' => 'required|string|max:50',
+            'apellido' => 'required|string|max:50',
+            'fecha_nacimiento' => 'required|date',
+            'dni' => 'required|numeric|min:1|max:99999999|unique:empleados,dni,' . $empleado->id,
+            'email' => 'required|email|unique:empleados,email,' . $empleado->id,
+            'direccion' => 'required|string|max:100',
+            'telefono' => 'required|numeric',
+            'fecha_ingreso' => 'required|date',
+        ]);
+
+        // Actualiza los campos del empleado con los nuevos valores
+        $empleado->nombre = $request->input('nombre');
+        $empleado->apellido = $request->input('apellido');
+        $empleado->fecha_nacimiento = $request->input('fecha_nacimiento');
+        $empleado->dni = $request->input('dni');
+        $empleado->email = $request->input('email');
+        $empleado->direccion = $request->input('direccion');
+        $empleado->telefono = $request->input('telefono');
+        $empleado->fecha_ingreso = $request->input('fecha_ingreso');
+
+        
+        $empleado -> usuario = $request->input('dni');
+        $empleado -> password =$request->input('dni');
+
+        // Guarda los cambios en la base de datos
+        $empleado->save();
+
+        return redirect()->route('empleados.index')->with('success', 'Empleado actualizado con éxito.');
     }
+
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $empleado = Empleado::find($id);
+
+        if (!$empleado) {
+            return back()->with('error', 'Empleado no encontrado.');
+        }
+
+        $empleado->delete(); // Elimina el registro de la base de datos
+
+        return redirect()->to('/empleados')->with('success', 'Empleado dado de baja con éxito.');
     }
+
 }
