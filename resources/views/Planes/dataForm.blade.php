@@ -60,8 +60,12 @@
             </div>
 
             <div class="form-group float-end">
-                        <a href="/planes" class="btn btn-outline-primary">Cancelar</a>
-                        <button type="submit" class="btn btn-outline-success">Agregar coberturas</button>
+            <a href="/planes" class="btn btn-outline-primary">
+            <span class="fas fa-arrow-left"></span> Volver
+            </a>
+            <button type="submit" class="btn btn-outline-success">
+            <i class="fas fa-plus"></i> Agregar coberturas
+            </button>
             </div>
     </form>
 </div>

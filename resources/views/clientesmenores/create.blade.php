@@ -87,8 +87,12 @@
                     </div>
                 </div>
                 <div class="form-group float-end">
-                    <a href="/clientes/create" class="btn btn-outline-primary">Cancelar</a>
-                    <button type="submit" class="btn btn-outline-success">Guardar datos</button>
+                <a href="/clientes/create" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left"></i> Volver
+                </a>
+                <button type="submit" class="btn btn-outline-success">
+                <i class="fas fa-save"></i> Guardar datos
+                </button>
                 </div>
             </form> 
         </div>

@@ -92,8 +92,13 @@
                 </div>
 
                 <div class="form-group float-end">
-                    <a href="/empleados" class="btn btn-outline-primary">Cancelar</a>
-                    <button type="submit" class="btn btn-outline-success">Guardar datos</button>
+                <a href="/empleados" class="btn btn-outline-primary">
+                <span class="fas fa-arrow-left"></span> Volver
+                </a>
+                <button type="submit" class="btn btn-outline-success">
+                <i class="fas fa-save"></i> Guardar datos
+                </button>
+
                 </div>
             </form>
 </div>

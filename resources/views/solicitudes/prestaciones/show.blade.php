@@ -44,18 +44,24 @@
         border-radius: 15px">{{ $prestacion->comentario }}</textarea>
 
         <div class="form-group mt-3 float-end mt-3">
-            <a href="{{ url('/solicitudes/prestaciones') }}" class="btn btn-outline-info">Cancelar</a>
+        <a href="{{ url('/solicitudes/prestaciones') }}" class="btn btn-outline-info">
+        <span class="fas fa-arrow-left"></span> Volver
+        </a>
             
             <form action="{{ route('prestaciones/update', ['id' => $prestacion->id, 'estado' => 'Aprobada']) }}" method="POST" style="display: inline-block;">
                 @csrf
                 @method('PATCH')
-                <button type="submit" class="btn btn-outline-success">Aprobar</button>
+                <button type="submit" class="btn btn-outline-success">
+                <span class="fas fa-check"></span> Aprobar
+                </button>
             </form>
 
             <form action="{{ route('prestaciones/update', ['id' => $prestacion->id, 'estado' => 'Rechazada']) }}" method="POST" style="display: inline-block;">
                 @csrf
                 @method('PATCH')
-                <button type="submit" class="btn btn-outline-danger">Rechazar</button>
+                <button type="submit" class="btn btn-outline-danger">
+                <span class="fas fa-times"></span> Rechazar
+                </button>
             </form>
         </div>
     </div>
