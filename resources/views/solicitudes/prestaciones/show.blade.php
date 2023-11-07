@@ -54,8 +54,15 @@
                 <button type="submit" class="btn btn-outline-success">
                 <span class="fas fa-check"></span> Aprobar    
                 </button>
-                <a href="{{ route('prestaciones/pdf', ['id' => $prestacion->id]) }}">Aprobar</a>
+                <a href="{{ route('prestaciones/pdf', ['id' => $prestacion->id]) }}" style="text-decoration: none; color: inherit;">Generar PDF</a>
+
             </form>
+
+
+           
+
+  
+
 
             <form action="{{ route('prestaciones/update', ['id' => $prestacion->id, 'estado' => 'Rechazada']) }}" method="POST" style="display: inline-block;">
                 @csrf
