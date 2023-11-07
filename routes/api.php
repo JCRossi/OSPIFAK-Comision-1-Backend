@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SolicitudesBajaControllerAPI;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -39,3 +40,6 @@ Route::get('/reintegros/{clienteUsuario}',[ReintegrosControllerAPI::class,'getRe
 Route::post('/reintegros',[ReintegrosControllerAPI::class,'store']);
 Route::post('/clientes/delete', [ClientesControllerAPI::class, 'delete']);
 Route::get('/clientes/{usuario}/titularYMenoresACargo', [ClientesControllerAPI::class, 'getTitularYMenoresACargo']);
+
+Route::post('/solicitudesBaja', [SolicitudesBajaControllerAPI::class, 'store']);
+Route::get('/solicitudesBaja/{cliente_usuario}', [SolicitudesBajaControllerAPI::class, 'index']);
