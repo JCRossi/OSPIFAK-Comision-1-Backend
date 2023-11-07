@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('solicitudes/prestaciones/{id}/{estado}', [PrestacionesController::class, 'update'])->name('prestaciones/update');
     Route::get('/clientes/{id}/pago', [ClientesController::class, 'generarPago'])->name('pago');
     Route::get('/clientes/{id}/pdf', [ClientesController::class, 'generarPdf'])->name('pdf');
+    Route::get('solicitudes/prestaciones/{id}/pdf', [PrestacionesController::class, 'generarPdf'])->name('prestaciones/pdf');
 });
 
 require __DIR__.'/auth.php';
