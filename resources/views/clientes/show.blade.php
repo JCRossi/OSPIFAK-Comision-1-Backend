@@ -95,7 +95,9 @@
             </div>
 
             <div class="form-group float-end">
-                <a href="/clientes" class="btn btn-outline-primary">Volver</a>
+            <a href="/clientes" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left"></i> Volver
+            </a>
             </div>
         </div>
     </div>    

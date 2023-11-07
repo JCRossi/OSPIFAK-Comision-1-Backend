@@ -1,5 +1,5 @@
 @php
-    use App\Models\Prestacion;
+    use App\Models\Reintegro;
 @endphp
 
 @extends('dashboard')
@@ -11,19 +11,19 @@
         </div>
     @endif
 
-    <h2 class="text-center mt-3 mb-4" style="color: #78d278;">Solicitud de prestacion</h2>
+    <h2 class="text-center mt-3 mb-4" style="color: #78d278;">Solicitud de reintegro</h2>
     <div class="container">
         <div class="row">
            <div class="col-md-6">
-            <p class="mb-0 text-start text-muted">Fecha solicitud: {{ \Carbon\Carbon::parse($prestacion->fecha_solicitud)->format('d/m/Y') }}</p>
-            
-            <p class="mb-0 text-start text-muted">Apellido y nombre: {{ $prestacion->cliente->apellido }}, {{ $prestacion->cliente->nombre }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DNI: {{ $prestacion->cliente->dni }}</p>
+            <p class="mb-0 text-start text-muted">Fecha solicitud: {{ $reintegro->created_at }}</p>
 
-            <p class="mb-0 text-start text-muted">Profesional solicitante: {{ $prestacion->nombre_medico }}  - Matrícula: {{ $prestacion->matricula_medico }}</p>
+            <p class="mb-0 text-start text-muted">Apellido y nombre: {{ $reintegro->cliente->apellido }}, {{ $reintegro->cliente->nombre }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DNI: {{ $reintegro->cliente->dni }}</p>
 
-            <p class="mb-0 text-start text-muted">Instituto: {{ $prestacion->instituto }}</p>
+            <p class="mb-0 text-start text-muted">Profesional solicitante: {{ $reintegro->medico->apellido }} {{ $reintegro->medico->nombre }} - Matrícula: {{ $reintegro->medico->matricula }}</p>
 
-            <p class="mb-0 text-start text-muted">Fecha turno: {{ \Carbon\Carbon::parse($prestacion->fecha_turno)->format('d/m/Y') }}</p>
+            <p class="mb-0 text-start text-muted">Instituto: {{ $reintegro->nombre_instituto }}</p>
+
+            <p class="mb-0 text-start text-muted">Fecha estudio/compra: {{ $reintegro->fecha_estudio_compra }}</p>
             </div>
         </div>
 
@@ -41,28 +41,27 @@
         <p align="left" class="mb-0 ml-2 text-muted">Observaciones empleado</p>
         <textarea class="form-control w-100" style="resize:none;-webkit-border-radius: 15px;
         -moz-border-radius: 15px;
-        border-radius: 15px">{{ $prestacion->comentario }}</textarea>
+        border-radius: 15px">{{ $reintegro->observaciones_empleado }}</textarea>
 
         <div class="form-group mt-3 float-end mt-3">
-        <a href="{{ url('/solicitudes/prestaciones') }}" class="btn btn-outline-info">
-        <span class="fas fa-arrow-left"></span> Volver
+        <a href="{{ url('/solicitudes/reintegros') }}" class="btn btn-outline-info">
+            <span class="fas fa-arrow-left"></span> Volver
         </a>
+
             
-            <form action="{{ route('prestaciones/update', ['id' => $prestacion->id, 'estado' => 'Aprobada']) }}" method="POST" style="display: inline-block;">
+            <form action="{{ route('reintegros/update', ['id' => $reintegro->id, 'estado' => 'Aprobada']) }}" method="POST" style="display: inline-block;">
                 @csrf
                 @method('PATCH')
                 <button type="submit" class="btn btn-outline-success">
-                <span class="fas fa-check"></span> Aprobar    
+                <span class="fas fa-check"></span> Aprobar
                 </button>
-                <a href="{{ route('prestaciones/pdf', ['id' => $prestacion->id]) }}">Aprobar</a>
-
             </form>
 
-            <form action="{{ route('prestaciones/update', ['id' => $prestacion->id, 'estado' => 'Rechazada']) }}" method="POST" style="display: inline-block;">
+            <form action="{{ route('reintegros/update', ['id' => $reintegro->id, 'estado' => 'Rechazada']) }}" method="POST" style="display: inline-block;">
                 @csrf
                 @method('PATCH')
                 <button type="submit" class="btn btn-outline-danger">
-                <span class="fas fa-times"></span> Rechazar
+                <i class="fas fa-times"></i> Rechazar
                 </button>
             </form>
         </div>

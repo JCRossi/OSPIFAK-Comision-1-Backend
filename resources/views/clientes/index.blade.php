@@ -33,7 +33,9 @@
                             <input type="text" class="form-control" id="dniInput" name="dni">
                         </div>
                         <div class="mt-2">
-                            <button type="submit" class="btn btn-primary btn-sm">Buscar</button>
+                        <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="fas fa-search"></i> Buscar
+                        </button>
                             <button type="button" class="btn btn-secondary btn-sm" id="clearFilter">Limpiar filtro</button>
                         </div>
                         </div>
@@ -85,13 +87,14 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-        <table class="table table-striped mt-4">
+        <table class="table ">
             <thead class="bg-primary text-white">
                 <tr>
+                    <th scope="col"></th>
                     <th scope="col">DNI titular</th>
                     <th scope="col">Apellido y nombre</th>
                     <th scope="col">Plan</th>
-                    <th scope="col"></th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -101,13 +104,16 @@
                 </tr>
             @else
                 @foreach($clientes as $cliente)
-                    <tr>
+                    <tr class="reintegro-row" data-url="/clientes/{{$cliente->id}}"style="cursor: pointer;">
+                        <td>
+                        <a href="/clientes/{{$cliente->id}}/edit" class="btn btn-light">
+                        <i class="fas fa-pencil-alt"></i> Editar
+                        </a>
+                        </td>
                         <td>{{ $cliente->dni }}</td>
                         <td>{{ $cliente->apellido }} {{ $cliente->nombre }}</td>
                         <td>{{ $cliente->plan_nombre }}</td>
-                        <td>
-                            <a href="/clientes/{{$cliente->id}}" class="btn btn-light">Detalle</a>
-                        </td>
+                       
                     </tr>
                 @endforeach
             @endif

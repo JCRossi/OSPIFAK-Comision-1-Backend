@@ -18,7 +18,9 @@
             
             <div class="form-group mt-4">
                 <a href="/clientesMenores/create" class="btn btn-outline-success">Agregar Menor a Cargo</a>
-                <a href="/clientes" class="btn btn-outline-success">Guardar Todo y Terminar</a>
+                <a href="/clientes" class="btn btn-outline-success">
+                <i class="fas fa-save"></i> Guardar Todo y Terminar
+                </a>
             </div>
         </div>
     </div>

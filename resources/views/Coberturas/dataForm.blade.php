@@ -34,8 +34,13 @@
             </table>
             
             <div class="form-group float-end">
-                <a href="/planes/create" class="btn btn-outline-primary">Cancelar</a>
-                <button type="submit" class="btn btn-outline-success">Guardar Datos</button>
+            <a href="/planes/create" class="btn btn-outline-primary">
+            <i class="fas fa-arrow-left"></i> Volver
+            </a>
+
+            <button type="submit" class="btn btn-outline-success">
+            <i class="fas fa-save"></i> Guardar Datos
+            </button>
             </div>
         </form>
     </div>
