@@ -23,16 +23,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/datos', [ClientesControllerAPI::class, 'datos']);
+Route::post('/login', [ClientesControllerAPI::class, 'login']);
+Route::get('/datos', [AuthController::class, 'datos']);
 Route::post('/registrar', [ClientesControllerAPI::class, 'registrar']);
 //Route::get('/planes', [PlanesControllerAPI::class, 'index']);
 
-Route::middleware(['auth:sanctum'])->group(function() {
-    Route::get('/prestaciones', [ClienteControllerAPI::class, 'recuperarPrestaciones']);
-    Route::post('/prestaciones/solicitudes', [ClienteControllerAPI::class, 'guardarPrestacion']);
-    Route::get('/menores', [ClienteControllerAPI::class, 'recuperarMenores']);
-
-});
+Route::post('/prestaciones', [ClientesControllerAPI::class, 'recuperarPrestaciones']);
+Route::post('/prestaciones/solicitudes', [ClientesControllerAPI::class, 'guardarPrestacion']);
+Route::post('/menores', [ClientesControllerAPI::class, 'recuperarMenores']);
+Route::post('/plan', [ClientesControllerAPI::class, 'recuperarPlan']);
 
 Route::get('/reintegros/{clienteUsuario}',[ReintegrosControllerAPI::class,'getReintegrosByClient']);
 Route::post('/reintegros',[ReintegrosControllerAPI::class,'store']);
