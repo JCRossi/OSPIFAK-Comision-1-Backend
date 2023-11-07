@@ -10,6 +10,7 @@ use App\Http\Controllers\ReintegrosController;
 use App\Http\Controllers\PrestacionesController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\ClientesMenoresController;
+use App\Http\Controllers\PDFController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('solicitudes/reintegros/{id}/{estado}', [ReintegrosController::class, 'update'])->name('reintegros/update');
     Route::resource('solicitudes/prestaciones', PrestacionesController::class);
     Route::patch('solicitudes/prestaciones/{id}/{estado}', [PrestacionesController::class, 'update'])->name('prestaciones/update');
+    Route::get('/clientes/{id}/pago', [ClientesController::class, 'generarPago'])->name('pago');
+    Route::get('/clientes/{id}/pdf', [ClientesController::class, 'generarPdf'])->name('pdf');
 });
 
 require __DIR__.'/auth.php';
