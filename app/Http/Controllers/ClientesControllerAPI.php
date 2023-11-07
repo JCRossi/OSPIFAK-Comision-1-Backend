@@ -211,10 +211,16 @@ class ClientesControllerAPI extends Controller
         DB::raw('(SELECT dni FROM clientes WHERE prestaciones.cliente_id = clientes.id) as cliente_dni'),
         DB::raw('(SELECT nombre FROM clientes WHERE prestaciones.cliente_id = clientes.id) as cliente_nombre'),
         DB::raw('(SELECT apellido FROM clientes WHERE prestaciones.cliente_id = clientes.id) as cliente_apellido'),
-        DB::raw('(SELECT dni FROM clientes WHERE prestaciones.cliente_menor_id = clientes.id) as cliente_menor_dni'),
-        DB::raw('(SELECT nombre FROM clientes WHERE prestaciones.cliente_menor_id = clientes.id) as cliente_menor_nombre'),
-        DB::raw('(SELECT apellido FROM clientes WHERE prestaciones.cliente_menor_id = clientes.id) as cliente_menor_apellido'))
+        DB::raw('(SELECT dni FROM cliente_menor WHERE prestaciones.cliente_menor_id = cliente_menor.id) as cliente_menor_dni'),
+        DB::raw('(SELECT nombre FROM cliente_menor WHERE prestaciones.cliente_menor_id = cliente_menor.id) as cliente_menor_nombre'),
+        DB::raw('(SELECT apellido FROM cliente_menor WHERE prestaciones.cliente_menor_id = cliente_menor.id) as cliente_menor_apellido'))
+        ->where(function ($query) use ($dniCliente) {
+            $query->whereHas('cliente', function ($query) use ($dniCliente) {
+                $query->where('dni', $dniCliente);
+            });
+        })
         ->get();
+
 
 
 
@@ -258,22 +264,43 @@ class ClientesControllerAPI extends Controller
             return response()->json(['error' => 'Cliente no encontrado'], 404);
         }
     
-        $plan = Plan::where('id', $cliente->id)->first();
+        $plan = Plan::where('id', $cliente->plan_id)->first();
         return response()->json($plan);
     }
     
     public function guardarPrestacion(Request $request)
     {
         // Validación de los datos del formulario
-        /*$request->validate([
+        $validator = Validator::make($request->all(),[
             'dni' => 'required',
-            'profesional' => 'required',
-            'matricula' => 'required',
+            'profesional' => 'required|string',
+            'matricula' => 'required|numeric',
             'tipoPrestacion' => 'required',
-            'instituto' => 'required',
+            'instituto' => 'required|string',
             'fechaTurno' => 'required|date',
             'comentarios' => 'nullable',
-        ]);*/
+        ],
+        [
+            'fechaTurno.required' => 'La fecha del turno no puede ser vacía.',
+            'fechaTurno.date' => 'La fecha del turno no tiene el formato adecuado.',
+
+            'dni.required' => 'Debe estar logueado para solicitar una prestación.',
+
+            'profesional.required' => 'Debe ingresar el nombre de un médico',
+            'profesional.string' => 'El médico no tiene el formato adecuado.',
+
+            'instituto.required' => 'Debe ingresar el nombre de un médico',
+            'instituto.string' => 'El instituto no tiene el formato adecuado.',
+
+            'matricula.required' => 'La matricula no puede ser vacía',
+            'matricula.numeric' => 'La matricula no tiene el formato adecuado.', 
+
+            'tipoPrestacion.required' => 'Debe seleccionar el tipo de la prestacion',
+
+         ]);
+        if ($validator->fails()){
+            return response()->json(['errors' => $validator->errors()],401);
+        }
     
         // Buscar el cliente en función del DNI proporcionado
         $cliente = Cliente::where('dni', $request->input('dni'))->first();
@@ -281,6 +308,7 @@ class ClientesControllerAPI extends Controller
         if (!$cliente) {
             return response()->json(['error' => 'Cliente no encontrado'], 404);
         }
+
     
         // Obtener el ID del cliente y del menor (si se seleccionó uno)
         $clienteId = $cliente->id;

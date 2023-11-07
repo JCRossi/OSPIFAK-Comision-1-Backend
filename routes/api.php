@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [ClientesControllerAPI::class, 'login']);
 Route::get('/datos', [AuthController::class, 'datos']);
 Route::post('/registrar', [ClientesControllerAPI::class, 'registrar']);
 Route::get('/planes', [PlanesControllerAPI::class, 'index']);
