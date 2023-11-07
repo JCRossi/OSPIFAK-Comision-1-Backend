@@ -98,7 +98,7 @@ class CoberturasController extends Controller
             return redirect()->to('/planes')->with('success', 'Coberturas definidas correctamente');
     }
 
-    /**
+     /**
      * Display the specified resource.
      */
     public function show(string $id)
@@ -109,18 +109,136 @@ class CoberturasController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+   /* public function edit(string $id)
     {
-        //
-    }
+        $enumValues = [
+            'Consultas medicas',
+            'Consultas medicas domiciliarias',
+            'Consulta medica online',
+            'Internacion',
+            'Odontologia general',
+            'Ortodoncia',
+            'Protesis odontologicas',
+            'Implantes odontologicos',
+            'Kinesiologia',
+            'Psicologia',
+            'Medicamentos en farmacia',
+            'Medicamentos en internacion',
+            'Optica',
+            'Cirugias esteticas',
+            'Analisis clinicos',
+            'Analisis de diagnostico',
+        ];
+        $cobertura = Cobertura::where('plan_id',$id)->get();
+        //return view('Coberturas/edit')->with('cobertura', $cobertura);
+        return view('Coberturas/edit', compact('enumValues', 'cobertura'));
+    }*/
+ public function edit(string $id)
+{
+    $enumValues = [
+        'Consultas medicas',
+        'Consultas medicas domiciliarias',
+        'Consulta medica online',
+        'Internacion',
+        'Odontologia general',
+        'Ortodoncia',
+        'Protesis odontologicas',
+        'Implantes odontologicos',
+        'Kinesiologia',
+        'Psicologia',
+        'Medicamentos en farmacia',
+        'Medicamentos en internacion',
+        'Optica',
+        'Cirugias esteticas',
+        'Analisis clinicos',
+        'Analisis de diagnostico',
+    ];
+    
+    $planId = $id; // Obtén el ID del plan que deseas editar.
+    $coberturas = Cobertura::where('plan_id', $planId)->get(); // Obtén las coberturas asociadas al plan.
+
+    return view('coberturas/edit', compact('enumValues', 'coberturas', 'planId'));
+
+}
+/*public function edit(string $id)
+{
+    $enumValues = [
+        'Consultas medicas',
+        'Consultas medicas domiciliarias',
+        'Consulta medica online',
+        'Internacion',
+        'Odontologia general',
+        'Ortodoncia',
+        'Protesis odontologicas',
+        'Implantes odontologicos',
+        'Kinesiologia',
+        'Psicologia',
+        'Medicamentos en farmacia',
+        'Medicamentos en internacion',
+        'Optica',
+        'Cirugias esteticas',
+        'Analisis clinicos',
+        'Analisis de diagnostico',
+    ];
+
+    $planId = $id; // Obtén el ID del plan que deseas editar.
+
+    // Obtén las coberturas y organízalas por el nombre de la prestación
+    $coberturas = Cobertura::where('plan_id', $planId)->get()->keyBy('nombre_prestacion');
+
+    return view('coberturas/edit', compact('enumValues', 'coberturas', 'planId'));
+}
+*/
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+   public function update(Request $request, string $id)
     {
-        //
+        $enumValues = [
+            'Consultas medicas',
+            'Consultas medicas domiciliarias',
+            'Consulta medica online',
+            'Internacion',
+            'Odontologia general',
+            'Ortodoncia',
+            'Protesis odontologicas',
+            'Implantes odontologicos',
+            'Kinesiologia',
+            'Psicologia',
+            'Medicamentos en farmacia',
+            'Medicamentos en internacion',
+            'Optica',
+            'Cirugias esteticas',
+            'Analisis clinicos',
+            'Analisis de diagnostico',
+        ];
+        $coberturas = Cobertura::where('plan_id',$id)->get();
+        $porcentajes = $request->input('porcentaje');
+            $request->validate(
+                [
+                    'porcentaje.*' => 'required|integer|min:0|max:100',
+                ],
+                [           
+                    'porcentaje.*.required' => 'El porcentaje de la prestación no puede ser vacío.',
+                    'porcentaje.*.integer' => 'El porcentaje de la prestación no tiene el formato adecuado.',
+                    'porcentaje.*.min' => 'El porcentaje ingresado debe encontrarse entre 0 y 100.',
+                    'porcentaje.*.max' => 'El porcentaje ingresado debe encontrarse entre 0 y 100.',
+                ]
+            );
+            
+            foreach ($enumValues as $index => $nombre_prestacion) {
+                $coberturas[$index]->porcentaje = $porcentajes[$index];
+                $coberturas[$index]->save();
+                $coberturas[$index]->setHidden(['created_at', 'updated_at']);
+            }
+
+            return redirect()->to('/planes')->with('success', 'Coberturas modificadas correctamente');
     }
+
+        
+
 
     /**
      * Remove the specified resource from storage.

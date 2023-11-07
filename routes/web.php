@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SolicitudesController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\CoberturasController;
@@ -48,6 +47,12 @@ Route::middleware('auth')->group(function () {
     Route::resource('planes',PlanController::class);
     Route::get('planes/{id}/delete', [PlanController::class, 'delete']);
     Route::resource('coberturas',CoberturasController::class);
+    Route::get('planes/edit/{id}', [PlanController::class, 'edit']);
+    Route::post('/planes/{id}', [PlanController::class, 'update'])->name('planes.update');
+    Route::resource('coberturas',CoberturasController::class)->except(['update']);
+    Route::get('coberturas/edit/{id}', [CoberturasController::class, 'edit']);
+    Route::put('/coberturas/{id}', [CoberturasController::class, 'update'])->name('coberturas.update');
+    
     Route::resource('clientes',ClientesController::class);
     Route::resource('clientesMenores',ClientesMenoresController::class);
     Route::get('solicitudes', [SolicitudesController::class, 'index']);

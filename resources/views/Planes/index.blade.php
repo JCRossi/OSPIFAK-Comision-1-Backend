@@ -62,4 +62,26 @@
             window.location.href = `/planes/${planId}/delete`;
         }
     </script>
+    <div class="table-responsive">
+        <table class="table" id="prestaciones-table">
+        @foreach ($planes as $planActual)
+            <tr class="planes-row" data-url="/planes/{{ $planActual->id }}">
+                <td style="text-align: left;">{{ $planActual->nombre }}</td>
+                <td>
+                        <form method="POST">
+                        <a href="/planes/edit/{{ $planActual->id }}"><i class="fas fa-edit"></i></a>
+                        </form>
+                </td>
+            </tr>
+        @endforeach
+        </table>
+    </div>
+
+    <style>
+        .planes-row {
+            cursor: pointer;
+        }
+    </style>
+
+
 @endsection
