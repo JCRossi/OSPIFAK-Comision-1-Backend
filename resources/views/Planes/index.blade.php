@@ -43,7 +43,7 @@
                                 <a href="{{ url("/planes/{$plan->id}/edit") }}" class="btn btn-outline-primary btn-borderless" style="display: inline-block;"><i class="fas fa-pencil-alt"></i></a>
                                 <button class="btn btn-outline-danger btn-borderless" onclick="confirmarDarDeBaja({{ $plan->id }})" style="display: inline-block;"><i class="fas fa-trash-alt"></i></button>
                             </td>
-                            <td onclick="window.location.href='{{ url("/planes/{$plan->id}/edit") }}';" style="cursor: pointer;">{{ $plan->nombre }}</td>
+                            <td style="text-align: left; cursor: pointer;" onclick="window.location.href='{{ url("/planes/{$plan->id}/edit") }}';">{{ $plan->nombre }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -62,26 +62,4 @@
             window.location.href = `/planes/${planId}/delete`;
         }
     </script>
-    <div class="table-responsive">
-        <table class="table" id="prestaciones-table">
-        @foreach ($planes as $planActual)
-            <tr class="planes-row" data-url="/planes/{{ $planActual->id }}">
-                <td style="text-align: left;">{{ $planActual->nombre }}</td>
-                <td>
-                        <form method="POST">
-                        <a href="/planes/edit/{{ $planActual->id }}"><i class="fas fa-edit"></i></a>
-                        </form>
-                </td>
-            </tr>
-        @endforeach
-        </table>
-    </div>
-
-    <style>
-        .planes-row {
-            cursor: pointer;
-        }
-    </style>
-
-
 @endsection

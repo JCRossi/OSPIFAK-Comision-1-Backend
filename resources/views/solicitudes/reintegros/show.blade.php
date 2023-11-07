@@ -44,29 +44,21 @@
         border-radius: 15px">{{ $reintegro->observaciones_empleado }}</textarea>
 
         <div class="form-group mt-3 float-end mt-3">
-        <a href="{{ url('/solicitudes/reintegros') }}" class="btn btn-outline-info">
-            <span class="fas fa-arrow-left"></span> Volver
-        </a>
-
+            <a href="{{ url('/solicitudes/reintegros') }}" class="btn btn-outline-info">Cancelar</a>
             
             <form action="{{ route('reintegros/update', ['id' => $reintegro->id, 'estado' => 'Aprobada']) }}" method="POST" style="display: inline-block;">
                 @csrf
                 @method('PATCH')
-                <button type="submit" class="btn btn-outline-success">
-                <span class="fas fa-check"></span> Aprobar
-                </button>
+                <button type="submit" class="btn btn-outline-success">Aprobar</button>
             </form>
 
             <form action="{{ route('reintegros/update', ['id' => $reintegro->id, 'estado' => 'Rechazada']) }}" method="POST" style="display: inline-block;">
                 @csrf
                 @method('PATCH')
-                <button type="submit" class="btn btn-outline-danger">
-                <i class="fas fa-times"></i> Rechazar
-                </button>
+                <button type="submit" class="btn btn-outline-danger">Rechazar</button>
             </form>
         </div>
     </div>
 @endsection
-
 
 
