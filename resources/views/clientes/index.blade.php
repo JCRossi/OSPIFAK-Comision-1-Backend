@@ -106,7 +106,9 @@
                 @foreach($clientes as $cliente)
                     <tr class="reintegro-row" data-url="/clientes/{{$cliente->id}}"style="cursor: pointer;">
                         <td>
-                        <a href="/clientes/{{$cliente->id}}/edit" class="btn btn-light">Editar</a>
+                        <a href="/clientes/{{$cliente->id}}/edit" class="btn btn-light">
+                        <i class="fas fa-pencil-alt"></i> Editar
+                        </a>
                         </td>
                         <td>{{ $cliente->dni }}</td>
                         <td>{{ $cliente->apellido }} {{ $cliente->nombre }}</td>
